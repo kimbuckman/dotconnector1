@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Meet The Dot Connector team, a national group of advisors working across strategy, business, government affairs, political consulting, research, and client development." />
+  <title>Our Team | The Dot Connector</title>
+  <style>
+    :root {
+      --red: #E63946;
+      --orange: #F4A261;
+      --green: #2A9D8F;
+      --blue: #457B9D;
+      --purple: #8338EC;
+      --emerald: #06A77D;
+      --dark: #1A1A2E;
+      --mid: #4A4A6A;
+      --line: #E4E8F2;
+      --paper: #FFFFFF;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: linear-gradient(170deg, #FFFFFF 0%, #F4F7FF 100%);
+      color: var(--dark);
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    nav {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 30;
+      height: 68px;
+      padding: 0 40px;
+      border-bottom: 1px solid #EEEEF3;
+      background: rgba(255, 255, 255, 0.93);
+      backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo img { display: block; height: 44px; object-fit: contain; }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links > li { position: relative; }
+    .nav-links a,
+    .services-menu summary {
+      color: var(--mid);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a[aria-current="page"] { color: var(--blue); }
+    .services-menu summary { cursor: pointer; display: block; line-height: normal; list-style: none; }
+    .services-menu summary::-webkit-details-marker { display: none; }
+    .services-menu summary::after { content: " +"; color: var(--blue); font-weight: 800; }
+    .services-menu[open] summary::after { content: " -"; }
+    .services-dropdown {
+      position: absolute;
+      top: 30px;
+      left: -18px;
+      width: 238px;
+      padding: 10px 0;
+      background: rgba(255, 255, 255, 0.98);
+      border: 1px solid #E8EAF1;
+      border-radius: 6px;
+      box-shadow: 0 16px 36px rgba(26, 26, 46, 0.13);
+      list-style: none;
+    }
+    .services-dropdown a { display: block; padding: 10px 18px; line-height: 1.25; }
+
+    .nav-cta {
+      border-radius: 28px;
+      background: var(--blue);
+      color: white;
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 9px 22px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--purple); }
+
+    .menu-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      place-items: center;
+    }
+    .menu-toggle span,
+    .menu-toggle span::before,
+    .menu-toggle span::after {
+      width: 24px;
+      height: 2px;
+      background: var(--dark);
+      content: "";
+      display: block;
+      position: relative;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .menu-toggle span::before { position: absolute; transform: translateY(-7px); }
+    .menu-toggle span::after { position: absolute; transform: translateY(7px); }
+    .menu-toggle[aria-expanded="true"] span { background: transparent; }
+    .menu-toggle[aria-expanded="true"] span::before { transform: rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] span::after { transform: rotate(-45deg); }
+
+    main {
+      min-height: calc(100vh - 68px);
+      padding: 118px 0 78px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #dotCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .team-hero {
+      position: relative;
+      z-index: 2;
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto 42px;
+    }
+    .eyebrow {
+      color: var(--blue);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+    h1 {
+      font-size: clamp(3.4rem, 7vw, 6rem);
+      font-weight: 800;
+      letter-spacing: 0;
+      line-height: 0.96;
+      margin-bottom: 24px;
+    }
+    .heading-line {
+      width: 86px;
+      height: 4px;
+      border: 0;
+      margin-bottom: 24px;
+      background: linear-gradient(90deg, var(--red), var(--orange), var(--green), var(--blue));
+    }
+    .team-intro {
+      max-width: 720px;
+      color: var(--mid);
+      font-size: clamp(1.05rem, 1.7vw, 1.22rem);
+      line-height: 1.75;
+    }
+
+    .team-stage {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      overflow: hidden;
+      padding: 8px 0 18px;
+    }
+    .team-stage::before,
+    .team-stage::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: min(120px, 10vw);
+      z-index: 3;
+      pointer-events: none;
+    }
+    .team-stage::before {
+      left: 0;
+      background: linear-gradient(90deg, #F8FAFF 0%, rgba(248, 250, 255, 0) 100%);
+    }
+    .team-stage::after {
+      right: 0;
+      background: linear-gradient(270deg, #F8FAFF 0%, rgba(248, 250, 255, 0) 100%);
+    }
+
+    .team-track {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      width: max-content;
+      padding: 0 24px;
+      animation: teamDrift 118s linear infinite;
+    }
+    .team-track:hover,
+    .team-track:focus-within,
+    .team-track.is-paused { animation-play-state: paused; }
+    .team-track.is-interacting { animation-play-state: paused; }
+
+    @keyframes teamDrift {
+      from { transform: translateX(0); }
+      to { transform: translateX(calc(-50% - 12px)); }
+    }
+
+    .team-card {
+      width: 332px;
+      min-height: 610px;
+      flex: 0 0 332px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(228, 232, 242, 0.95);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 18px 42px rgba(26, 26, 46, 0.1);
+      overflow: hidden;
+    }
+    .portrait {
+      width: 100%;
+      height: 285px;
+      background: linear-gradient(135deg, #EEF2FF 0%, #F7FBFF 100%);
+      border-bottom: 4px solid var(--accent, var(--blue));
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: var(--portrait-position, center 22%);
+    }
+    .portrait-placeholder {
+      width: 154px;
+      height: 154px;
+      border: 4px solid rgba(255, 255, 255, 0.8);
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.92), var(--accent, var(--blue)));
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 2.3rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      box-shadow: 0 18px 34px rgba(26, 26, 46, 0.16);
+      text-shadow: 0 2px 12px rgba(26, 26, 46, 0.2);
+    }
+    .team-info {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 22px;
+    }
+    .team-info h2 {
+      color: var(--dark);
+      font-size: 1.18rem;
+      font-weight: 800;
+      line-height: 1.22;
+      margin-bottom: 6px;
+    }
+    .role {
+      color: var(--accent, var(--blue));
+      font-size: 0.9rem;
+      font-weight: 800;
+      line-height: 1.35;
+      margin-bottom: 14px;
+    }
+    .bio {
+      color: var(--mid);
+      font-size: 0.93rem;
+      line-height: 1.62;
+    }
+    .bio p { margin-bottom: 12px; }
+    .bio p:last-child { margin-bottom: 0; }
+    .bio-extra {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.28s ease, opacity 0.22s ease;
+    }
+    .team-card.expanded .bio-extra {
+      max-height: 2600px;
+      opacity: 1;
+      margin-top: 12px;
+    }
+    .contact-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: 18px;
+    }
+    .contact-row a,
+    .more-btn {
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: white;
+      color: var(--dark);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 800;
+      padding: 8px 14px;
+      text-decoration: none;
+      transition: background 0.18s, border-color 0.18s, color 0.18s;
+    }
+    .more-btn {
+      background: var(--accent, var(--blue));
+      border-color: var(--accent, var(--blue));
+      color: white;
+    }
+
+    .ribbon-hint {
+      position: relative;
+      z-index: 2;
+      width: min(1120px, calc(100% - 48px));
+      margin: -22px auto 18px;
+      color: var(--mid);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .contact-row a:hover,
+    .more-btn:hover {
+      border-color: var(--accent, var(--blue));
+      color: var(--accent, var(--blue));
+    }
+    .more-btn:hover { background: white; }
+
+    .dot-accent {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.16;
+      pointer-events: none;
+    }
+    .dot-accent.one { width: 88px; height: 88px; background: var(--orange); top: 118px; left: 5vw; }
+    .dot-accent.two { width: 120px; height: 120px; background: var(--green); right: 3vw; bottom: 10%; }
+
+    footer {
+      background: var(--dark);
+      color: rgba(255, 255, 255, 0.58);
+      padding: 28px 40px;
+      text-align: center;
+      font-size: 0.88rem;
+    }
+    footer strong { color: white; }
+
+    @media (max-width: 800px) {
+      nav { padding: 0 20px; }
+      .nav-cta { display: none; }
+      .menu-toggle { display: grid; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 68px;
+        left: 0;
+        right: 0;
+        padding: 18px 24px 22px;
+        background: rgba(255, 255, 255, 0.98);
+        border-bottom: 1px solid #EEEEF3;
+        box-shadow: 0 14px 28px rgba(26, 26, 46, 0.1);
+        flex-direction: column;
+        gap: 0;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { display: block; padding: 13px 0; font-size: 1rem; }
+      .services-menu summary { padding: 13px 0; font-size: 1rem; }
+      .services-dropdown {
+        position: static;
+        width: 100%;
+        padding: 0 0 5px 18px;
+        border: 0;
+        border-left: 2px solid var(--line);
+        border-radius: 0;
+        box-shadow: none;
+        background: transparent;
+      }
+      .services-dropdown a { padding: 9px 0; font-size: 0.92rem; }
+      main { padding-top: 104px; }
+      .team-hero { width: min(100% - 40px, 1120px); margin-bottom: 28px; }
+      h1 { font-size: clamp(3rem, 16vw, 4.8rem); }
+      .team-stage {
+        overflow-x: auto;
+        padding-bottom: 24px;
+        scroll-snap-type: x mandatory;
+      }
+      .team-stage::before,
+      .team-stage::after { display: none; }
+      .team-track {
+        animation: teamDrift 118s linear infinite;
+        width: max-content;
+        padding: 0 20px;
+      }
+      .team-stage:active .team-track { animation-play-state: paused; }
+      .ribbon-hint { width: calc(100% - 40px); margin-top: -12px; }
+      .team-card {
+        width: min(332px, calc(100vw - 46px));
+        flex-basis: min(332px, calc(100vw - 46px));
+        scroll-snap-align: center;
+        min-height: 590px;
+      }
+      .portrait { height: 320px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      #dotCanvas { display: none; }
+      .team-track { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a class="nav-logo" href="index.html" aria-label="The Dot Connector home">
+      <img src="logo.png" alt="The Dot Connector logo" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li>
+        <details class="services-menu">
+          <summary>Services</summary>
+          <ul class="services-dropdown">
+            <li><a href="business-consulting.html">Business Consulting</a></li>
+            <li><a href="government-affairs.html">Government Affairs</a></li>
+            <li><a href="economic-development.html">Economic Development</a></li>
+            <li><a href="political-consulting.html">Political Consulting</a></li>
+            <li><a href="networking.html">Networking</a></li>
+            <li><a href="niche-development.html">Niche Development</a></li>
+          </ul>
+        </details>
+      </li>
+      <li><a href="our-team.html" aria-current="page">Our Team</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a class="nav-cta" href="contact.html">Connect</a>
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
+      <span></span>
+    </button>
+  </nav>
+
+  <main>
+    <canvas id="dotCanvas" aria-hidden="true"></canvas>
+    <span class="dot-accent one" aria-hidden="true"></span>
+    <span class="dot-accent two" aria-hidden="true"></span>
+
+    <header class="team-hero">
+      <p class="eyebrow">Our Team</p>
+      <h1>Trusted<br />Connectors</h1>
+      <hr class="heading-line" />
+      <p class="team-intro">The Dot Connector brings together experienced strategists, operators, researchers, communicators, and client advocates with deep relationships across business, government, politics, media, and public affairs.</p>
+    </header>
+
+    <p class="ribbon-hint">The ribbon moves on its own. Hover or touch it to pause, then swipe to explore.</p>
+
+    <section class="team-stage" aria-label="The Dot Connector team">
+      <div class="team-track">
+        <article class="team-card" style="--accent: var(--blue);">
+          <div class="portrait"><img src="team/richard-buckman.jpeg" alt="Richard “Buck” Buckman" style="--portrait-position: center 16%;" /></div>
+          <div class="team-info">
+            <h2>Richard “Buck” Buckman</h2>
+            <p class="role">Founder &amp; CEO</p>
+            <div class="bio">
+              <p>For more than four decades, Richard “Buck” Buckman has been a trusted political strategist, government affairs professional, and relationships architect. As Founder and CEO of The Dot Connector, Buck has turned a lifetime of trusted relationships into a thriving consulting practice that helps businesses, organizations, elected officials, and entrepreneurs solve complex challenges by connecting the right people, ideas, and opportunities.</p>
+              <div class="bio-extra">
+                <p>Buck’s career spans politics, government relations, economic development, media strategy, crisis management, and business consulting. He has earned the trust of leaders across government, business, and the nonprofit sector.</p>
+                <p>The philosophy behind The Dot Connector is simple but powerful: every challenge has a solution when the right people are brought together. Whether launching a company, navigating public policy, managing a crisis, expanding a business, or opening doors that once seemed impossible, Buck turns vision into action.</p>
+                <p>Throughout his career, Buck has held several influential leadership positions. As Director of Government Affairs for the nationally recognized Morelli Ratner Law Firm in New York City, he directed the firm’s Washington, D.C., operations and advised senior partners on federal and international government affairs. His work required close collaboration with Members of Congress, Senate and House leadership, executive branch officials, the White House, and leaders from both major political parties.</p>
+                <p>Earlier, Buck served as Director of Government Relations for The Eaves Law Firm, where he led congressional and government relations efforts on one of the nation’s most significant environmental health cases. Representing the people of Vieques, Puerto Rico, in their fight against the U.S. Navy’s bombing range, Buck helped generate more than twenty congressional resolutions addressing healthcare concerns and environmental justice, bringing national attention to the plight of the island’s residents.</p>
+                <p>Before entering government affairs, Buck founded Buckman &amp; Associates, which became one of America’s most successful political consulting firms. Under his leadership, the firm compiled a record of 68 victories in 72 political campaigns, providing strategic counsel for candidates at the federal, state, and local levels, including numerous presidential campaigns. His ability to understand campaigns, messaging, coalition-building, and voter behavior established him as a respected political consultant.</p>
+                <p>What distinguishes Buck throughout his career is the relationships he has built over four decades. His network includes elected officials, corporate executives, entrepreneurs, community leaders, policy experts, media professionals, and international business leaders. Time and again, Buck has shown that meaningful relationships can accomplish what traditional consulting alone cannot.</p>
+                <p>A native of Pachuta, Mississippi, Buck studied Political Science and Economics at the University of Southern Mississippi before beginning his career on Capitol Hill working for the late Congressman Larkin Smith (R-MS). That early experience in Washington laid the foundation for a career defined by public service, strategic thinking, and leadership.</p>
+                <p>Today, Buck operates The Dot Connector from its headquarters in Diamondhead, Mississippi, with an additional office in Washington, D.C., leading a team of trusted consultants who provide strategic counsel to clients across the United States and internationally. His work includes political consulting, government affairs, business development, crisis communications, economic development, strategic partnerships, and executive advisory services.</p>
+                <p>Buckman’s career has been built on one enduring belief: “One connection is a contact. Thousands of connections, thoughtfully linked over a forty-year career, become a network capable of changing industries, shaping public policy, and moving innovation into the future.” That is The Dot Connector.</p>
+                <p>Buck is also an accomplished author and storyteller. His debut novel, Hills Over Havana, has been optioned for development as a major streaming series. Away from the office, Buck enjoys spending time with his wife, Kim, and their three beloved dogs, Hank, Branch, and Willow.</p>
+              </div>
+            </div>
+            <div class="contact-row">
+              <a class="more-btn" href="team-profile.html?member=richard-buckman">More</a>
+              <a href="mailto:buck@dotconnector.net">Email</a>
+              <a href="tel:+16016068577">(601) 606-8577</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="team-card" style="--accent: var(--orange);">
+          <div class="portrait"><img src="team/kim-buckman.jpeg" alt="Kim Buckman" style="--portrait-position: center 18%;" /></div>
+          <div class="team-info">
+            <h2>Kim Buckman</h2>
+            <p class="role">Chief Administrative Officer</p>
+            <div class="bio">
+              <p>Kim Buckman serves as Chief Administrative Officer at The Dot Connector, overseeing the company's operations, financial administration, and organizational infrastructure. She provides disciplined oversight that helps the firm execute complex projects with precision and confidence.</p>
+              <div class="bio-extra">
+                <p>Throughout her adult life, Kim has been involved in business operations, earning a reputation for careful financial stewardship, organizational excellence, and practical problem-solving. Her ability to manage budgets, monitor financial performance, and maintain operational efficiency has made her a valuable part of every organization she has served.</p>
+                <p>At The Dot Connector, Kim ensures that the company's internal operations remain effective. From financial management and administrative oversight to coordinating the logistical demands of national and international client engagements, she plays a critical role in execution.</p>
+                <p>Working alongside her husband, Richard “Buck” Buckman, Founder and CEO of The Dot Connector, Kim serves as a trusted executive partner and strategic advisor. Whether traveling throughout the United States or internationally to meet with clients, business leaders, elected officials, or strategic partners, she provides the operational support and financial leadership that help the firm maintain its high standard of service.</p>
+                <p>Beyond her executive responsibilities, Kim is also an accomplished artist whose creativity complements her analytical strengths. She is a canvas painter and digital pattern designer, bringing an eye for color, composition, and innovation to her creative work.</p>
+                <p>Kim believes that successful organizations are built upon strong relationships, careful planning, and unwavering financial responsibility. Her commitment to operational excellence and dedication to service has helped establish The Dot Connector as a trusted strategic consulting firm serving clients across business, government, public affairs, and political consulting.</p>
+                <p>As Chief Administrative Officer, Kim Buckman provides the operational backbone of The Dot Connector, ensuring that every project is supported by sound management and fiscal integrity.</p>
+              </div>
+            </div>
+            <div class="contact-row">
+              <a class="more-btn" href="team-profile.html?member=kim-buckman">More</a>
+              <a href="mailto:kim@dotconnector.net">Email</a>
+              <a href="tel:+16015437532">(601) 543-7532</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="team-card" style="--accent: var(--purple);">
+          <div class="portrait"><img src="team/michael-vardoulis.jpeg" alt="Michael Vardoulis" /></div>
+          <div class="team-info">
+            <h2>Michael Vardoulis</h2>
+            <p class="role">Chief of Staff</p>
+            <div class="bio">
+              <p>Some professionals build careers. Others build influence. Michael Vardoulis has spent more than four decades doing both.</p>
+              <p>As Chief of Staff for The Dot Connector, Vardoulis brings together a lifetime of experience in political strategy, executive communications, marketing, coalition building, organizational leadership, and public affairs.</p>
+              <div class="bio-extra">
+                <p>His career has been defined by an uncommon ability to recognize emerging opportunities, develop persuasive messaging, assemble effective teams, and execute strategies that produce lasting results. Whether advising political leaders, guiding communications initiatives, managing complex projects, or helping organizations navigate sensitive public issues, Vardoulis has earned a reputation as a trusted strategist whose counsel is grounded in experience, discipline, and vision.</p>
+                <p>With more than forty years immersed in political strategy and over thirty-five years leading successful marketing, sales, and management organizations, Vardoulis has served as a Political Analyst, Consultant, Advisor, Commentator, and Author. His career reflects a unique blend of political insight and executive leadership, enabling him to move seamlessly among public policy, business development, and strategic communications.</p>
+                <p>One of the defining milestones of his professional journey came while directing one of California’s most successful independent gubernatorial campaigns. The campaign demonstrated that disciplined organization, innovative messaging, and principled leadership could successfully compete outside traditional political structures. In the years that followed, Vardoulis remained deeply engaged in grassroots activism, coalition-building, and issue advocacy, helping organize successful efforts that challenged entrenched government institutions and encouraged greater citizen participation in the democratic process.</p>
+                <p>Throughout his career, Vardoulis has maintained a steadfast belief that government exists to serve its citizens, not the other way around. His philosophy is rooted in the conviction that Americans have both the right and the responsibility to question authority, demand accountability, and remain actively engaged in preserving constitutional principles. That philosophy continues to influence every communications strategy, political initiative, and public affairs project he undertakes.</p>
+                <p>In recent years, Vardoulis has become especially recognized for his work in strategic communications and language theory. Long before artificial intelligence transformed modern communications, he understood that language itself would become one of society’s most valuable strategic assets. His work emphasizes the importance of sophisticated, high-bandwidth communication that elevates conversations beyond the emotionally reactive, low-bandwidth messaging that dominates much of today’s political and digital landscape.</p>
+                <p>As Chief of Staff at The Dot Connector, Vardoulis works alongside CEO Buck Buckman to help clients navigate some of their most significant opportunities and challenges. He plays a central role in coordinating strategic initiatives, refining executive messaging, overseeing complex projects, and ensuring that every engagement reflects the firm’s commitment to thoughtful leadership, disciplined execution, and measurable results.</p>
+                <p>Complementing his strategic expertise is an extensive network of relationships cultivated throughout media, entertainment, and public affairs circles. These carefully developed connections provide The Dot Connector’s clients with unique opportunities for strategic introductions, media access, and collaborative partnerships that would otherwise be out of reach.</p>
+                <p>Michael Vardoulis represents the modern executive strategist, equally comfortable advising political leaders, corporate executives, advocacy organizations, entrepreneurs, and public figures. His career reflects an enduring commitment to principled leadership, thoughtful communication, and strategic excellence. Through every endeavor, he continues to help organizations transform ideas into action, challenges into opportunities, and vision into lasting achievement.</p>
+              </div>
+            </div>
+            <div class="contact-row">
+              <a class="more-btn" href="team-profile.html?member=michael-vardoulis">More</a>
+              <a href="mailto:michael@dotconnector.net">Email</a>
+              <a href="tel:+19492898653">(949) 289-8653</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="team-card" style="--accent: var(--green);">
+          <div class="portrait"><img src="team/andy-griffith.jpeg" alt="Andrew “Andy” Griffith" /></div>
+          <div class="team-info">
+            <h2>Andrew “Andy” Griffith</h2>
+            <p class="role">Director of Field Operations</p>
+            <div class="bio">
+              <p>Andrew Griffith is a respected political strategist, government affairs consultant, and leadership development professional with more than fifteen years of experience in campaign work, public policy, and educational leadership.</p>
+              <div class="bio-extra">
+                <p>With more than fifteen years of experience advising candidates, organizations, and grassroots movements, Griffith has earned a reputation for building political operations that deliver results. He provides strategic consulting, campaign management, grassroots development, voter outreach, and communications guidance. Griffith helps clients build campaigns that compete effectively in today’s political landscape.</p>
+                <p>Griffith’s experience spans local school board elections, municipal campaigns, statewide races, and presidential politics. Throughout his career, he has advised candidates in challenging political environments, developed strategies, organized field operations, managed volunteer networks, and crafted messaging that resonates with voters. He has shown he can build and lead large-scale operations while maintaining the flexibility required for modern campaigns.</p>
+                <p>A highlight of his political career was serving as National Field Director and Senior Advisor for Robert F. Kennedy Jr. during his presidential campaign. In that role, Griffith helped oversee grassroots operations, coordinated field initiatives, and worked with senior leadership to expand voter outreach and organizational infrastructure across multiple states.</p>
+                <p>What distinguishes Griffith is his career in education. For more than thirteen years, he served as a government and economics educator while coaching competitive high school debate. His classroom became a training ground for future leaders, where students learned the mechanics of government, civic engagement, critical thinking, persuasive communication, and responsible leadership.</p>
+                <p>Throughout his educational and political careers, Griffith has demonstrated an ability to manage organizations, oversee budgets, recruit and mentor teams, and execute strategic initiatives under demanding conditions. Whether leading campaign field operations or developing educational programs, he has focused on empowering people, strengthening organizations, and producing results.</p>
+                <p>Known for his strategic mindset, collaborative leadership style, and commitment to constitutional principles and civic participation, Griffith is a trusted advisor to candidates, political organizations, advocacy groups, and business leaders seeking practical solutions to complex challenges.</p>
+                <p>Today, Andrew Griffith continues to advise candidates and organizations throughout the United States, helping leaders turn ideas into action and grassroots movements into winning campaigns. His career reflects the belief that successful leadership begins with informed citizens, thoughtful strategy, and service to the public good.</p>
+              </div>
+            </div>
+            <div class="contact-row">
+              <a class="more-btn" href="team-profile.html?member=andy-griffith">More</a>
+              <a href="mailto:andy@dotconnector.net">Email</a>
+              <a href="tel:+19034058806">(903) 405-8806</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="team-card" style="--accent: var(--red);">
+          <div class="portrait"><img src="team/doug-adams.jpeg" alt="John Douglas “Doug” Adams" /></div>
+          <div class="team-info">
+            <h2>John Douglas “Doug” Adams</h2>
+            <p class="role">Director of Business Affairs</p>
+            <div class="bio">
+              <p>John Douglas “Doug” Adams is an accomplished business executive, entrepreneur, Certified Public Accountant (CPA), and strategic advisor whose distinguished career spans more than three decades across public accounting, automotive retail, insurance, executive leadership, and energy innovation.</p>
+              <div class="bio-extra">
+                <p>As Chief Financial Strategist for The Dot Connector, Adams brings a disciplined financial perspective to the firm’s strategic consulting practice. Drawing upon decades of executive experience, he provides clients with sophisticated insight into corporate finance, operational efficiency, business development, capital management, and long-term strategic planning.</p>
+                <p>A native of the New Orleans area, Adams developed the values of discipline, leadership, and perseverance early in life. After graduating from Catholic High School, he earned a full athletic scholarship to attend Tulane University, where he played football under the leadership of legendary coach Mack Brown. Balancing collegiate athletics with academic excellence, he graduated in 1989 with a Bachelor of Science in Management before beginning his professional career with Deloitte.</p>
+                <p>While building his career in public accounting, Adams successfully passed the Uniform Certified Public Accountant (CPA) Examination in 1990. He later returned to Tulane University to earn a Master of Business Administration (MBA), graduating in 1992 with an expanded understanding of executive leadership, corporate strategy, and organizational management.</p>
+                <p>Following graduate school, Adams entered the retail automotive industry. By 2000, he had become part owner of a Ford Lincoln Mercury and Nissan dealership. In 2004, Adams earned national recognition as the youngest Ford dealer in the United States when he acquired and operated Adams Ford in Houston, Texas.</p>
+                <p>Returning to New Orleans in 2013, Adams expanded his professional experience into the insurance industry, where he continued advising clients and organizations on financial planning, risk management, and business strategy.</p>
+                <p>In 2018, Adams entered the energy sector through the commercialization of groundbreaking technology designed to mitigate hydrogen sulfide in crude oil production. This innovative solution addresses operational and safety challenges while improving workplace safety, environmental stewardship, regulatory compliance, and production efficiency.</p>
+                <p>At The Dot Connector, Adams combines his financial acumen with the firm’s relationship-driven consulting philosophy to help clients navigate today’s increasingly complex business environment. Known for his integrity, analytical mindset, and thoughtful leadership, Doug Adams continues to serve as a trusted executive whose experience bridges finance, entrepreneurship, innovation, and corporate strategy.</p>
+              </div>
+            </div>
+            <div class="contact-row">
+              <a class="more-btn" href="team-profile.html?member=doug-adams">More</a>
+              <a href="mailto:doug@dotconnector.net">Email</a>
+              <a href="tel:+15048772144">(504) 877-2144</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="team-card" style="--accent: var(--emerald);">
+          <div class="portrait"><img src="team/rod-mcculloch.jpeg" alt="Rod McCulloch" /></div>
+          <div class="team-info">
+            <h2>Rod McCulloch</h2>
+            <p class="role">Director of Research</p>
+            <div class="bio">
+              <p>Rod McCulloch is a nationally respected public opinion researcher and political strategist with more than four decades of experience in polling, survey research, and campaign consulting.</p>
+              <div class="bio-extra">
+                <p>Widely recognized for his expertise in measuring voter sentiment and identifying emerging political trends, he has earned a reputation as one of the Midwest’s most accomplished pollsters. Legendary 50,000-watt radio station 890 WLS-AM has referred to him as “Illinois’ Premier Pollster,” a distinction that reflects his longstanding credibility and influence within the political community.</p>
+                <p>McCulloch was mentored by the late, internationally renowned pollster Mike McKeon, one of the nation’s most respected pioneers in political research. Early in his career, Rod served on the polling team that accurately identified and warned of the rapid rise of the Lyndon LaRouche movement during the 1980s.</p>
+                <p>Since the early 2000s, McCulloch has directed The Illinois Poll, a highly regarded semi-monthly statewide survey measuring public opinion on politics, government, and the issues shaping Illinois. Recognized for its accuracy and insightful analysis, the poll has become a trusted resource for elected officials, candidates, media organizations, business leaders, and policy professionals.</p>
+                <p>Building on that success, McCulloch has expanded his research to the national stage by creating The American Poll, which provides comprehensive public opinion research examining political, governmental, and cultural trends across the United States.</p>
+                <p>Throughout his distinguished career, Rod has played a strategic role in more than 100 successful political campaigns, providing candidates and organizations with data-driven insights that have helped shape winning strategies and informed decision-making at every level of government.</p>
+                <p>With a career spanning more than forty years, Rod McCulloch continues to be recognized as one of America’s most experienced and trusted voices in political polling.</p>
+              </div>
+            </div>
+            <div class="contact-row">
+              <a class="more-btn" href="team-profile.html?member=rod-mcculloch">More</a>
+              <a href="mailto:rod@dotconnector.net">Email</a>
+              <a href="tel:+13123881782">(312) 388-1782</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="team-card" style="--accent: var(--blue);">
+          <div class="portrait"><img src="team/dewayne-buckman.jpg" alt="Dewayne Buckman" /></div>
+          <div class="team-info">
+            <h2>Dewayne Buckman</h2>
+            <p class="role">Director of Design</p>
+            <div class="bio">
+              <p>Bio coming soon.</p>
+            </div>
+            <div class="contact-row">
+              <a href="mailto:dewayne@dotconnector.net">Email</a>
+              <a href="tel:+16019348638">(601) 934-8638</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="team-card" style="--accent: var(--orange);">
+          <div class="portrait"><span class="portrait-placeholder">AP</span></div>
+          <div class="team-info">
+            <h2>Andrew Panagiotakis</h2>
+            <p class="role">Director of Client Development</p>
+            <div class="bio">
+              <p>Bio coming soon.</p>
+            </div>
+            <div class="contact-row">
+              <a href="mailto:andrew@dotconnector.net">Email</a>
+              <a href="tel:+16097030806">(609) 703-0806</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="team-card" style="--accent: var(--green);">
+          <div class="portrait"><span class="portrait-placeholder">LG</span></div>
+          <div class="team-info">
+            <h2>Lynn Grego</h2>
+            <p class="role">Director of Commercial Development</p>
+            <div class="bio">
+              <p>Bio coming soon.</p>
+            </div>
+            <div class="contact-row">
+              <a href="mailto:lynn@dotconnector.net">Email</a>
+              <a href="tel:+12282239903">(228) 223-9903</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="team-card" style="--accent: var(--purple);">
+          <div class="portrait"><span class="portrait-placeholder">PM</span></div>
+          <div class="team-info">
+            <h2>Patrick Merkel</h2>
+            <p class="role">Director of Client Services</p>
+            <div class="bio">
+              <p>Bio coming soon.</p>
+            </div>
+            <div class="contact-row">
+              <a href="mailto:patrick@dotconnector.net">Email</a>
+              <a href="tel:+13125601017">(312) 560-1017</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="team-card" style="--accent: var(--red);">
+          <div class="portrait"><span class="portrait-placeholder">RS</span></div>
+          <div class="team-info">
+            <h2>Robert Simmons</h2>
+            <p class="role">Director of Outreach</p>
+            <div class="bio">
+              <p>Bio coming soon.</p>
+            </div>
+            <div class="contact-row">
+              <a href="mailto:robert@dotconnector.net">Email</a>
+              <a href="tel:+12286972692">(228) 697-2692</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>The Dot Connector</strong> &nbsp;|&nbsp; Strategic relationships. Meaningful results.
+  </footer>
+
+  <script>
+    var menuToggle = document.querySelector(".menu-toggle");
+    var mobileMenu = document.querySelector(".nav-links");
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener("click", function() {
+        var isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+        menuToggle.setAttribute("aria-expanded", String(!isOpen));
+        menuToggle.setAttribute("aria-label", isOpen ? "Open navigation" : "Close navigation");
+        mobileMenu.classList.toggle("open", !isOpen);
+      });
+    }
+
+    var teamTrack = document.querySelector(".team-track");
+    if (teamTrack) {
+      teamTrack.innerHTML = teamTrack.innerHTML + teamTrack.innerHTML;
+      teamTrack.addEventListener("pointerdown", function() {
+        teamTrack.classList.add("is-interacting");
+      });
+      teamTrack.addEventListener("pointerup", function() {
+        teamTrack.classList.remove("is-interacting");
+      });
+    }
+
+    (function() {
+      var canvas = document.getElementById("dotCanvas");
+      if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      var ctx = canvas.getContext("2d");
+      var colors = ["#E63946", "#F4A261", "#2A9D8F", "#457B9D", "#8338EC", "#06A77D"];
+      var dots = [];
+      var width = 0;
+      var height = 0;
+
+      function resize() {
+        width = canvas.width = canvas.offsetWidth;
+        height = canvas.height = canvas.offsetHeight;
+        dots = [];
+        var count = Math.max(28, Math.floor((width * height) / 30000));
+        for (var i = 0; i < count; i++) {
+          dots.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            r: Math.random() * 14 + 5,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            alpha: Math.random() * 0.1 + 0.035,
+            vx: (Math.random() - 0.5) * 0.18,
+            vy: (Math.random() - 0.5) * 0.18
+          });
+        }
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        for (var i = 0; i < dots.length; i++) {
+          for (var j = i + 1; j < dots.length; j++) {
+            var distance = Math.hypot(dots[i].x - dots[j].x, dots[i].y - dots[j].y);
+            if (distance < 180) {
+              ctx.beginPath();
+              ctx.moveTo(dots[i].x, dots[i].y);
+              ctx.lineTo(dots[j].x, dots[j].y);
+              ctx.strokeStyle = "rgba(82, 104, 180, " + (0.12 * (1 - distance / 180)) + ")";
+              ctx.stroke();
+            }
+          }
+        }
+
+        dots.forEach(function(dot) {
+          ctx.globalAlpha = dot.alpha;
+          ctx.beginPath();
+          ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
+          ctx.fillStyle = dot.color;
+          ctx.fill();
+          ctx.globalAlpha = 1;
+          dot.x += dot.vx;
+          dot.y += dot.vy;
+          if (dot.x < -dot.r) dot.x = width + dot.r;
+          if (dot.x > width + dot.r) dot.x = -dot.r;
+          if (dot.y < -dot.r) dot.y = height + dot.r;
+          if (dot.y > height + dot.r) dot.y = -dot.r;
+        });
+
+        requestAnimationFrame(animate);
+      }
+
+      window.addEventListener("resize", resize);
+      resize();
+      animate();
+    }());
+  </script>
+</body>
+</html>
