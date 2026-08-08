@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+}<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -229,8 +229,9 @@
   height: 100%;
   display: block;
 
-  object-fit: cover;
-  object-position: center 20%;
+  object-fit: contain;
+  object-position: center center;
+  background: #EEF2FF;
 }
 
 .team-info {
@@ -317,28 +318,76 @@
     footer strong { color: white; }
     
 @media (max-width: 800px) {
+  nav { padding: 0 20px; }
+  .nav-cta { display: none; }
+  .menu-toggle { display: grid; }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 68px;
+    left: 0;
+    right: 0;
+    padding: 18px 24px 22px;
+    background: rgba(255, 255, 255, 0.98);
+    border-bottom: 1px solid #EEEEF3;
+    box-shadow: 0 14px 28px rgba(26, 26, 46, 0.1);
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .nav-links.open { display: flex; }
+  .nav-links a { display: block; padding: 13px 0; font-size: 1rem; }
+  .services-menu summary { padding: 13px 0; font-size: 1rem; }
+
+  .services-dropdown {
+    position: static;
+    width: 100%;
+    padding: 0 0 5px 18px;
+    border: 0;
+    border-left: 2px solid var(--line);
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .services-dropdown a { padding: 9px 0; font-size: 0.92rem; }
+
+  main { padding-top: 104px; }
+
+  .team-hero {
+    width: min(100% - 40px, 1120px);
+    margin-bottom: 28px;
+  }
+
+  h1 { font-size: clamp(3rem, 16vw, 4.8rem); }
 
   .team-stage {
     width: calc(100% - 20px);
     padding: 8px 38px 24px;
   }
 
+  .team-track {
+    width: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 0;
+  }
+
   .team-card {
     width: calc(100vw - 96px);
     min-width: calc(100vw - 96px);
     flex: 0 0 calc(100vw - 96px);
-
     display: grid;
     grid-template-columns: 1fr;
-
     min-height: 0;
     max-height: none;
+    scroll-snap-align: center;
   }
 
   .portrait {
     width: 100%;
     height: 280px;
-
     border-right: 0;
     border-bottom: 4px solid var(--accent, var(--blue));
   }
@@ -348,7 +397,22 @@
     padding: 20px;
   }
 
-  </style>
+  .team-arrow {
+    width: 38px;
+    height: 38px;
+  }
+
+  .team-arrow-left { left: 2px; }
+  .team-arrow-right { right: 2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  #dotCanvas { display: none; }
+  .team-track { scroll-behavior: auto; }
+}
+
+</style>
 </head>
 <body>
   <nav>
@@ -394,6 +458,10 @@
     <p class="ribbon-hint">The ribbon moves on its own. Hover or touch it to pause, then swipe to explore.</p>
 
     <section class="team-stage" aria-label="The Dot Connector team">
+      <button class="team-arrow team-arrow-left" type="button" aria-label="Previous team member">
+        &#10094;
+      </button>
+
       <div class="team-track">
         <article class="team-card" style="--accent: var(--blue);">
           <div class="portrait"><img src="team/richard-buckman.jpeg" alt="Richard “Buck” Buckman" style="--portrait-position: center 16%;" /></div>
@@ -623,6 +691,10 @@
           </div>
         </article>
       </div>
+
+      <button class="team-arrow team-arrow-right" type="button" aria-label="Next team member">
+        &#10095;
+      </button>
     </section>
   </main>
 
@@ -643,14 +715,58 @@
     }
 
     var teamTrack = document.querySelector(".team-track");
+    var leftArrow = document.querySelector(".team-arrow-left");
+    var rightArrow = document.querySelector(".team-arrow-right");
+
     if (teamTrack) {
-      teamTrack.innerHTML = teamTrack.innerHTML + teamTrack.innerHTML;
-      teamTrack.addEventListener("pointerdown", function() {
-        teamTrack.classList.add("is-interacting");
-      });
-      teamTrack.addEventListener("pointerup", function() {
-        teamTrack.classList.remove("is-interacting");
-      });
+      function getScrollAmount() {
+        var firstCard = teamTrack.querySelector(".team-card");
+        if (!firstCard) return 744;
+        return firstCard.getBoundingClientRect().width + 24;
+      }
+
+      function scrollNext() {
+        var amount = getScrollAmount();
+        var maxScroll = teamTrack.scrollWidth - teamTrack.clientWidth;
+
+        if (teamTrack.scrollLeft >= maxScroll - 10) {
+          teamTrack.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          teamTrack.scrollBy({ left: amount, behavior: "smooth" });
+        }
+      }
+
+      function scrollPrevious() {
+        var amount = getScrollAmount();
+
+        if (teamTrack.scrollLeft <= 10) {
+          teamTrack.scrollTo({ left: teamTrack.scrollWidth, behavior: "smooth" });
+        } else {
+          teamTrack.scrollBy({ left: -amount, behavior: "smooth" });
+        }
+      }
+
+      if (rightArrow) rightArrow.addEventListener("click", scrollNext);
+      if (leftArrow) leftArrow.addEventListener("click", scrollPrevious);
+
+      var autoScroll;
+      var autoDelay = 4500;
+
+      function stopAutoScroll() {
+        if (autoScroll) clearInterval(autoScroll);
+      }
+
+      function startAutoScroll() {
+        stopAutoScroll();
+        autoScroll = setInterval(scrollNext, autoDelay);
+      }
+
+      teamTrack.addEventListener("mouseenter", stopAutoScroll);
+      teamTrack.addEventListener("mouseleave", startAutoScroll);
+      teamTrack.addEventListener("pointerdown", stopAutoScroll);
+      teamTrack.addEventListener("pointerup", startAutoScroll);
+
+      startAutoScroll();
     }
 
     (function() {
