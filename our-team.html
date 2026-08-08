@@ -167,44 +167,85 @@
       z-index: 2;
       width: 100%;
       overflow: hidden;
-      padding: 8px 0 18px;
+      padding: 8px 54px 18px;
     }
+
     .team-stage::before,
     .team-stage::after {
       content: "";
       position: absolute;
       top: 0;
       bottom: 0;
-      width: min(120px, 10vw);
+      width: min(90px, 8vw);
       z-index: 3;
       pointer-events: none;
     }
+
     .team-stage::before {
       left: 0;
-      background: linear-gradient(90deg, #F8FAFF 0%, rgba(248, 250, 255, 0) 100%);
+      background: linear-gradient(
+        90deg,
+        #F8FAFF 0%,
+        rgba(248, 250, 255, 0) 100%
+      );
     }
+
     .team-stage::after {
       right: 0;
-      background: linear-gradient(270deg, #F8FAFF 0%, rgba(248, 250, 255, 0) 100%);
+      background: linear-gradient(
+        270deg,
+        #F8FAFF 0%,
+        rgba(248, 250, 255, 0) 100%
+      );
     }
 
     .team-track {
       display: flex;
       align-items: flex-start;
       gap: 24px;
-      width: max-content;
-      padding: 0 24px;
-      animation: teamDrift 118s linear infinite;
+      width: 100%;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      padding: 0 4px;
     }
-    .team-track:hover,
-    .team-track:focus-within,
-    .team-track.is-paused { animation-play-state: paused; }
-    .team-track.is-interacting { animation-play-state: paused; }
 
-    @keyframes teamDrift {
-      from { transform: translateX(0); }
-      to { transform: translateX(calc(-50% - 12px)); }
+    .team-track::-webkit-scrollbar {
+      display: none;
     }
+
+    .team-arrow {
+      position: absolute;
+      top: 46%;
+      transform: translateY(-50%);
+      z-index: 6;
+      width: 44px;
+      height: 44px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.96);
+      color: var(--dark);
+      font-size: 1.35rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(26, 26, 46, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .team-arrow:hover {
+      background: var(--blue);
+      color: white;
+    }
+
+    .team-arrow:active {
+      transform: translateY(-50%) scale(0.96);
+    }
+
+    .team-arrow-left { left: 8px; }
+    .team-arrow-right { right: 8px; }
 
     .team-card {
       width: 332px;
@@ -357,6 +398,7 @@
       nav { padding: 0 20px; }
       .nav-cta { display: none; }
       .menu-toggle { display: grid; }
+
       .nav-links {
         display: none;
         position: absolute;
@@ -370,9 +412,11 @@
         flex-direction: column;
         gap: 0;
       }
+
       .nav-links.open { display: flex; }
       .nav-links a { display: block; padding: 13px 0; font-size: 1rem; }
       .services-menu summary { padding: 13px 0; font-size: 1rem; }
+
       .services-dropdown {
         position: static;
         width: 100%;
@@ -383,39 +427,52 @@
         box-shadow: none;
         background: transparent;
       }
+
       .services-dropdown a { padding: 9px 0; font-size: 0.92rem; }
       main { padding-top: 88px; }
       .team-hero { width: min(100% - 40px, 1120px); margin-bottom: 20px; }
       h1 { font-size: clamp(2.65rem, 13vw, 4rem); }
+
       .team-stage {
-        overflow-x: auto;
-        padding-bottom: 24px;
+        padding: 8px 42px 24px;
+      }
+
+      .team-stage::before,
+      .team-stage::after {
+        display: none;
+      }
+
+      .team-track {
         scroll-snap-type: x mandatory;
       }
-      .team-stage::before,
-      .team-stage::after { display: none; }
-      .team-track {
-        animation: teamDrift 118s linear infinite;
-        width: max-content;
-        padding: 0 20px;
-      }
-      .team-stage:active .team-track { animation-play-state: paused; }
+
       .team-card {
-        width: min(332px, calc(100vw - 46px));
-        flex-basis: min(332px, calc(100vw - 46px));
+        width: min(332px, calc(100vw - 90px));
+        flex-basis: min(332px, calc(100vw - 90px));
         scroll-snap-align: center;
         min-height: 590px;
       }
+
       .portrait { height: auto; aspect-ratio: 4 / 5; }
+
+      .team-arrow {
+        width: 38px;
+        height: 38px;
+        font-size: 1.1rem;
+      }
+
+      .team-arrow-left { left: 2px; }
+      .team-arrow-right { right: 2px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       #dotCanvas { display: none; }
-      .team-track { animation: none; }
+      .team-track { scroll-behavior: auto; }
     }
   </style>
 </head>
+
 <body>
   <nav>
     <a class="nav-logo" href="index.html" aria-label="The Dot Connector home">
@@ -450,6 +507,16 @@
     <span class="dot-accent one" aria-hidden="true"></span>
     <span class="dot-accent two" aria-hidden="true"></span>
 
+
+            </div>
+          </div>
+        </article>
+
+  <main>
+    <canvas id="dotCanvas" aria-hidden="true"></canvas>
+    <span class="dot-accent one" aria-hidden="true"></span>
+    <span class="dot-accent two" aria-hidden="true"></span>
+
     <header class="team-hero">
       <p class="eyebrow">Our Team</p>
       <h1>Trusted<br />Connectors</h1>
@@ -458,7 +525,12 @@
     </header>
 
     <section class="team-stage" aria-label="The Dot Connector team">
+      <button class="team-arrow team-arrow-left" type="button" aria-label="Previous team member">
+        &#10094;
+      </button>
+
       <div class="team-track">
+
         <article class="team-card" style="--accent: var(--blue);">
           <div class="portrait"><img src="team/richard-buckman.jpeg" alt="Richard “Buck” Buckman" /></div>
           <div class="team-info">
@@ -485,10 +557,11 @@
               <a href="tel:+16016068577">(601) 606-8577</a>
             </div>
           </div>
+          </div>
         </article>
 
         <article class="team-card" style="--accent: var(--orange);">
-          <div class="portrait"><img src="team/kim-buckman.jpg" alt="Kim Buckman" /></div>
+          <div class="portrait"><img src="team/kim-buckman.jpeg" alt="Kim Buckman" /></div>
           <div class="team-info">
             <h2>Kim Buckman</h2>
             <p class="role">Chief Administrative Officer</p>
@@ -510,6 +583,7 @@
             </div>
           </div>
         </article>
+
 
         <article class="team-card" style="--accent: var(--purple);">
           <div class="portrait"><img src="team/michael-vardoulis.jpeg" alt="Michael Vardoulis" /></div>
@@ -538,6 +612,7 @@
           </div>
         </article>
 
+
         <article class="team-card" style="--accent: var(--green);">
           <div class="portrait"><img src="team/andy-griffith.jpeg" alt="Andrew “Andy” Griffith" /></div>
           <div class="team-info">
@@ -562,6 +637,7 @@
             </div>
           </div>
         </article>
+
 
         <article class="team-card" style="--accent: var(--red);">
           <div class="portrait"><img src="team/doug-adams.jpeg" alt="John Douglas “Doug” Adams" /></div>
@@ -588,6 +664,7 @@
           </div>
         </article>
 
+
         <article class="team-card" style="--accent: var(--emerald);">
           <div class="portrait"><img src="team/rod-mcculloch.jpeg" alt="Rod McCulloch" /></div>
           <div class="team-info">
@@ -612,13 +689,14 @@
           </div>
         </article>
 
+
         <article class="team-card" style="--accent: var(--blue);">
           <div class="portrait"><img src="team/Dewayne-Buckman.jpeg" alt="Dewayne Buckman" /></div>
           <div class="team-info">
             <h2>Dewayne Buckman</h2>
             <p class="role">Director of Design</p>
             <div class="bio">
-              <p>IN MEMORY OF DEWAYNE BUCKMAN
+              <p><strong>IN MEMORY OF DEWAYNE BUCKMAN</strong></p>
               <p>For more than 25 years, Dewayne Buckman built a successful and respected career in the media industry, where his creativity, strategic thinking, and deep understanding of storytelling set him apart. After establishing himself in media, he transitioned into IT sales, where he once again found success through his ability to connect people, solve problems, and deliver results.</p>
               <p>In his later years, Dewayne retired from corporate life to pursue his passions for writing and design, becoming one of the original Dot Connectors alongside his brother, Buck Buckman. It was here that he was able to fully express the breadth of his talent and vision.</p>
               <p>Dewayne was a gifted writer and the author of the novel Black Heart, which was widely received as a major success and is now being considered by film producers for adaptation into a major motion picture.</p> 
@@ -627,8 +705,6 @@
               <p>Dewayne passed away unexpectedly on July 12, 2026, in a tragic accident. His loss has left a profound void in the lives of those who knew and loved him.</p>
               <p>He is deeply missed by his brother Buck, his mother, his two daughters, his four grandchildren, and countless family members, friends, and colleagues. His passing has also left an immeasurable absence within the Dot Connector family, where his presence, creativity, and spirit were foundational.</p>
               <p>Dewayne Buckman will always be remembered for his talent, his wisdom, his loyalty, and his ability to connect ideas, and people, in ways that made everything around him stronger. He will be forever loved and never forgotten.</p>
-            </div>
-            </div>
             </div>
           </div>
         </article>
@@ -661,6 +737,7 @@
           </div>
         </article>
 
+
         <article class="team-card" style="--accent: var(--green);">
           <div class="portrait"><img src="team/lynn-grego.png" alt="Lynn Grego" /></div>
           <div class="team-info">
@@ -685,8 +762,9 @@
           </div>
         </article>
 
+
         <article class="team-card" style="--accent: var(--purple);">
-          <div class="portrait"><span class="Pastor-Dan-Carr.jpeg">PM</span></div>
+          <div class="portrait"><img src="team/Pastor-Dan-Carr.jpeg" alt="Pastor Dan Carr" /></div>
           <div class="team-info">
             <h2>Pastor Dan Carr</h2>
             <p class="role">Director Christian Outreach</p>
@@ -701,7 +779,6 @@
               <p>Through his ministry, writing, leadership, and civic involvement, Pastor Dan Carr continues to inspire others to strengthen their homes, serve their communities, engage their government with wisdom and grace, and live each day with purpose. His unwavering commitment to faith, family, and freedom has made him a trusted leader whose influence reaches far beyond the church, impacting communities and encouraging others to become the difference they wish to see in the world.</p>
               <p>As a member of The Dot Connector team, Pastor Dan Carr brings a unique combination of pastoral leadership, community influence, and grassroots political engagement. His ability to unite people around shared values, cultivate meaningful relationships, and inspire servant leadership makes him a valuable resource for organizations, political campaigns, faith-based initiatives, and community development efforts. His experience in both ministry and civic affairs exemplifies The Dot Connector’s mission of connecting exceptional people, strategic opportunities, and purpose-driven solutions that create lasting impact.</p>
             </div>
-            </div>
             <div class="contact-row">
               <a href="mailto:dan@dotconnector.net">Email</a>
               <a href="tel:+12282293438">(228) 229-3438</a>
@@ -710,7 +787,7 @@
         </article>
 
         <article class="team-card" style="--accent: var(--red);">
-          <div class="portrait"><span class="Robert-Simmons.jpeg">RS</span></div>
+          <div class="portrait"><img src="team/Robert-Simmons.jpeg" alt="Robert Simmons" /></div>
           <div class="team-info">
             <h2>Robert Simmons</h2>
             <p class="role">Director of Outreach</p>
@@ -726,14 +803,18 @@
               <p>Beyond his professional accomplishments, Simmons has remained deeply committed to civic leadership and community service. He has served on numerous governmental, educational, charitable, and nonprofit boards, including the Seafood Industry Museum, the Greater Biloxi Economic Development Foundation, the Mississippi Rivers and Harbors Commission, the Jackson State University College of Public Service Council of Advisors, and as Chairman of the Trustee Board of Tabernacle Missionary Baptist Church in D’Iberville, Mississippi.</p>
               <p>Today, Robert Simmons continues to be recognized as one of the Gulf South’s foremost authorities on government relations, legislative affairs, economic development, and strategic public-private partnerships. His unmatched understanding of government processes, combined with decades of trusted relationships across Mississippi and Washington, D.C., enables him to successfully connect public policy with private-sector investment, creating opportunities that strengthen communities, expand businesses, and drive long-term economic growth.</p>
             </div>
-            </div>
             <div class="contact-row">
               <a href="mailto:robert@dotconnector.net">Email</a>
               <a href="tel:+12286972692">(228) 697-2692</a>
             </div>
           </div>
         </article>
+
       </div>
+
+      <button class="team-arrow team-arrow-right" type="button" aria-label="Next team member">
+        &#10095;
+      </button>
     </section>
   </main>
 
@@ -741,111 +822,204 @@
     <strong>The Dot Connector</strong> &nbsp;|&nbsp; Strategic relationships. Meaningful results.
   </footer>
 
-  <script>
-    var menuToggle = document.querySelector(".menu-toggle");
-    var mobileMenu = document.querySelector(".nav-links");
-    if (menuToggle && mobileMenu) {
-      menuToggle.addEventListener("click", function() {
-        var isOpen = menuToggle.getAttribute("aria-expanded") === "true";
-        menuToggle.setAttribute("aria-expanded", String(!isOpen));
-        menuToggle.setAttribute("aria-label", isOpen ? "Open navigation" : "Close navigation");
-        mobileMenu.classList.toggle("open", !isOpen);
-      });
-    }
+<script>
+  var menuToggle = document.querySelector(".menu-toggle");
+  var mobileMenu = document.querySelector(".nav-links");
 
-    var teamTrack = document.querySelector(".team-track");
-    if (teamTrack) {
-      teamTrack.innerHTML = teamTrack.innerHTML + teamTrack.innerHTML;
-      Array.from(teamTrack.querySelectorAll(".team-card")).forEach(function(card) {
-        var profileLink = card.querySelector(".more-btn");
-        if (!profileLink) return;
-        card.setAttribute("tabindex", "0");
-        card.setAttribute("role", "link");
-        card.setAttribute("aria-label", "View full profile for " + card.querySelector("h2").textContent);
-        card.addEventListener("click", function(event) {
-          if (event.target.closest("a")) return;
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener("click", function() {
+      var isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+      menuToggle.setAttribute("aria-expanded", String(!isOpen));
+      menuToggle.setAttribute("aria-label", isOpen ? "Open navigation" : "Close navigation");
+      mobileMenu.classList.toggle("open", !isOpen);
+    });
+  }
+
+
+  var teamTrack = document.querySelector(".team-track");
+  var leftArrow = document.querySelector(".team-arrow-left");
+  var rightArrow = document.querySelector(".team-arrow-right");
+
+  if (teamTrack) {
+
+    var cards = Array.from(teamTrack.querySelectorAll(".team-card"));
+
+    cards.forEach(function(card) {
+      var profileLink = card.querySelector(".more-btn");
+      if (!profileLink) return;
+
+      card.setAttribute("tabindex", "0");
+      card.setAttribute("role", "link");
+
+      var heading = card.querySelector("h2");
+
+      if (heading) {
+        card.setAttribute(
+          "aria-label",
+          "View full profile for " + heading.textContent
+        );
+      }
+
+      card.addEventListener("click", function(event) {
+        if (event.target.closest("a, button")) return;
+        window.location.href = profileLink.href;
+      });
+
+      card.addEventListener("keydown", function(event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
           window.location.href = profileLink.href;
-        });
-        card.addEventListener("keydown", function(event) {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            window.location.href = profileLink.href;
-          }
-        });
+        }
       });
-      teamTrack.addEventListener("pointerdown", function() {
-        teamTrack.classList.add("is-interacting");
-      });
-      teamTrack.addEventListener("pointerup", function() {
-        teamTrack.classList.remove("is-interacting");
-      });
+    });
+
+    function getScrollAmount() {
+      var firstCard = teamTrack.querySelector(".team-card");
+      if (!firstCard) return 356;
+
+      return firstCard.getBoundingClientRect().width + 24;
     }
 
-    (function() {
-      var canvas = document.getElementById("dotCanvas");
-      if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    function scrollNext() {
+      var amount = getScrollAmount();
+      var maxScroll = teamTrack.scrollWidth - teamTrack.clientWidth;
 
-      var ctx = canvas.getContext("2d");
-      var colors = ["#E63946", "#F4A261", "#2A9D8F", "#457B9D", "#8338EC", "#06A77D"];
-      var dots = [];
-      var width = 0;
-      var height = 0;
-
-      function resize() {
-        width = canvas.width = canvas.offsetWidth;
-        height = canvas.height = canvas.offsetHeight;
-        dots = [];
-        var count = Math.max(28, Math.floor((width * height) / 30000));
-        for (var i = 0; i < count; i++) {
-          dots.push({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            r: Math.random() * 14 + 5,
-            color: colors[Math.floor(Math.random() * colors.length)],
-            alpha: Math.random() * 0.1 + 0.035,
-            vx: (Math.random() - 0.5) * 0.18,
-            vy: (Math.random() - 0.5) * 0.18
-          });
-        }
+      if (teamTrack.scrollLeft >= maxScroll - 10) {
+        teamTrack.scrollTo({
+          left: 0,
+          behavior: "smooth"
+        });
+      } else {
+        teamTrack.scrollBy({
+          left: amount,
+          behavior: "smooth"
+        });
       }
+    }
 
-      function animate() {
-        ctx.clearRect(0, 0, width, height);
-        for (var i = 0; i < dots.length; i++) {
-          for (var j = i + 1; j < dots.length; j++) {
-            var distance = Math.hypot(dots[i].x - dots[j].x, dots[i].y - dots[j].y);
-            if (distance < 180) {
-              ctx.beginPath();
-              ctx.moveTo(dots[i].x, dots[i].y);
-              ctx.lineTo(dots[j].x, dots[j].y);
-              ctx.strokeStyle = "rgba(82, 104, 180, " + (0.12 * (1 - distance / 180)) + ")";
-              ctx.stroke();
-            }
+    function scrollPrevious() {
+      var amount = getScrollAmount();
+
+      if (teamTrack.scrollLeft <= 10) {
+        teamTrack.scrollTo({
+          left: teamTrack.scrollWidth,
+          behavior: "smooth"
+        });
+      } else {
+        teamTrack.scrollBy({
+          left: -amount,
+          behavior: "smooth"
+        });
+      }
+    }
+
+    if (rightArrow) {
+      rightArrow.addEventListener("click", scrollNext);
+    }
+
+    if (leftArrow) {
+      leftArrow.addEventListener("click", scrollPrevious);
+    }
+
+    var autoScroll;
+    var autoDelay = 4500;
+
+    function startAutoScroll() {
+      stopAutoScroll();
+
+      autoScroll = setInterval(function() {
+        scrollNext();
+      }, autoDelay);
+    }
+
+    function stopAutoScroll() {
+      if (autoScroll) {
+        clearInterval(autoScroll);
+      }
+    }
+
+    teamTrack.addEventListener("mouseenter", stopAutoScroll);
+    teamTrack.addEventListener("mouseleave", startAutoScroll);
+    teamTrack.addEventListener("focusin", stopAutoScroll);
+    teamTrack.addEventListener("focusout", startAutoScroll);
+    teamTrack.addEventListener("pointerdown", stopAutoScroll);
+    teamTrack.addEventListener("pointerup", startAutoScroll);
+
+    startAutoScroll();
+  }
+
+
+  (function() {
+    var canvas = document.getElementById("dotCanvas");
+    if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    var ctx = canvas.getContext("2d");
+    var colors = ["#E63946", "#F4A261", "#2A9D8F", "#457B9D", "#8338EC", "#06A77D"];
+    var dots = [];
+    var width = 0;
+    var height = 0;
+
+    function resize() {
+      width = canvas.width = canvas.offsetWidth;
+      height = canvas.height = canvas.offsetHeight;
+      dots = [];
+      var count = Math.max(28, Math.floor((width * height) / 30000));
+
+      for (var i = 0; i < count; i++) {
+        dots.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          r: Math.random() * 14 + 5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: Math.random() * 0.1 + 0.035,
+          vx: (Math.random() - 0.5) * 0.18,
+          vy: (Math.random() - 0.5) * 0.18
+        });
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+
+      for (var i = 0; i < dots.length; i++) {
+        for (var j = i + 1; j < dots.length; j++) {
+          var distance = Math.hypot(dots[i].x - dots[j].x, dots[i].y - dots[j].y);
+
+          if (distance < 180) {
+            ctx.beginPath();
+            ctx.moveTo(dots[i].x, dots[i].y);
+            ctx.lineTo(dots[j].x, dots[j].y);
+            ctx.strokeStyle = "rgba(82, 104, 180, " + (0.12 * (1 - distance / 180)) + ")";
+            ctx.stroke();
           }
         }
-
-        dots.forEach(function(dot) {
-          ctx.globalAlpha = dot.alpha;
-          ctx.beginPath();
-          ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
-          ctx.fillStyle = dot.color;
-          ctx.fill();
-          ctx.globalAlpha = 1;
-          dot.x += dot.vx;
-          dot.y += dot.vy;
-          if (dot.x < -dot.r) dot.x = width + dot.r;
-          if (dot.x > width + dot.r) dot.x = -dot.r;
-          if (dot.y < -dot.r) dot.y = height + dot.r;
-          if (dot.y > height + dot.r) dot.y = -dot.r;
-        });
-
-        requestAnimationFrame(animate);
       }
 
-      window.addEventListener("resize", resize);
-      resize();
-      animate();
-    }());
-  </script>
+      dots.forEach(function(dot) {
+        ctx.globalAlpha = dot.alpha;
+        ctx.beginPath();
+        ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
+        ctx.fillStyle = dot.color;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+
+        dot.x += dot.vx;
+        dot.y += dot.vy;
+
+        if (dot.x < -dot.r) dot.x = width + dot.r;
+        if (dot.x > width + dot.r) dot.x = -dot.r;
+        if (dot.y < -dot.r) dot.y = height + dot.r;
+        if (dot.y > height + dot.r) dot.y = -dot.r;
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    animate();
+  }());
+
+</script>
 </body>
 </html>
