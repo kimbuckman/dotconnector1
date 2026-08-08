@@ -250,9 +250,10 @@
   width: 720px;
   flex: 0 0 720px;
   min-height: 350px;
-
+    max-height: 350px;
   display: grid;
   grid-template-columns: 220px 1fr;
+    overflow: hidden;
 
     .team-card:hover,
     .team-card:focus-visible {
@@ -310,6 +311,7 @@
 .team-info {
   display: flex;
    flex-direction: column;
+  height: 350px
   padding: 24px 28px;
   min-width: 0;
     }
@@ -333,9 +335,11 @@
       line-height: 1.55;
     }
     .bio p { margin-bottom: 12px; }
-    .bio p:last-child { margin-bottom: 0; }
+    }
+    .bio p:last-child { margin-bottom: 0; 
+    }
     .bio-extra {
-      display: none;
+      display: none !important;
     }
       max-height: 0;
       opacity: 0;
