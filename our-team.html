@@ -161,15 +161,15 @@
       font-size: clamp(1.05rem, 1.7vw, 1.22rem);
       line-height: 1.75;
     }
-
-    .team-stage {
-      position: relative;
-      z-index: 2;
-      width: min(1180px, calc(100% - 48px)); 
-      overflow: hidden;
-      padding: 8px 54px 18px;
-    }
-
+.team-stage {
+  position: relative;
+  z-index: 2;
+  width: min(1200px, calc(100% - 60px));
+  margin: 0 auto;
+  overflow: hidden;
+  padding: 10px 55px 25px;
+}
+   
     .team-stage::before,
     .team-stage::after {
       content: "";
@@ -198,17 +198,16 @@
         rgba(248, 250, 255, 0) 100%
       );
     }
-
-    .team-track {
-      display: flex;
-      align-items: flex-start;
-      gap: 24px;
-      width: 100%;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      scrollbar-width: none;
-      padding: 0 4px;
-    }
+.team-track {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 24px;
+  width: 100%;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
 
     .team-track::-webkit-scrollbar {
       display: none;
@@ -247,36 +246,38 @@
     .team-arrow-left { left: 8px; }
     .team-arrow-right { right: 8px; }
 
-   .team-card {
-  width: 700px;
-  min-height: 340px;
-  flex: 0 0 700px;
+  .team-card {
+  width: 720px;
+  flex: 0 0 720px;
+  min-height: 350px;
+
   display: grid;
-     grid-template-columns: 220px 1fr:
-    
-  border: 1px solid rgba(228, 232, 242, 0.95);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 18px 42px rgba(26, 26, 46, 0.1);
-  overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
+  grid-template-columns: 220px 1fr;
+
     .team-card:hover,
     .team-card:focus-visible {
       transform: translateY(-5px);
       box-shadow: 0 24px 52px rgba(26, 26, 46, 0.15);
       outline: none;
     }
-    
+     border: 1px solid rgba(228, 232, 242, 0.95);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 18px 42px rgba(26, 26, 46, 0.1);
+
+  overflow: hidden;
+  cursor: pointer;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+} 
  .portrait {
   width: 220px;
   min-width: 220px;
-  height: 340px;
+  height: 350px;
   aspect-ratio: auto;
   background: linear-gradient(135deg, #EEF2FF 0%, #F7FBFF 100%);
   border-right: 4px solid var(--accent, var(--blue));
-  border-bottom: 0;
+  border-bottom: none;
 
    overflow:hidden;
  }
@@ -403,22 +404,26 @@
     footer strong { color: white; }
 
    @media (max-width: 800px) {
-  .team-card {
-    width: min(332px, calc(100vw - 90px));
-    flex: 0 0 min(332px, calc(100vw - 90px));
-    flex-direction: column;
-    min-height: 590px;
-  }
+
 
   .portrait {
     width: 100%;
     min-width: 0;
-    height: auto;
+    height: 280px;
     aspect-ratio: 4 / 5;
     border-right: none;
     border-bottom: 4px solid var(--accent, var(--blue));
   }
-}
+     .team-info {
+    padding: 20px;
+  }
+}  
+ .team-card {
+    width: calc(100vw - 100px);
+    flex: 0 0 calc(100vw - 100px);
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
       .nav-links {
         display: none;
         position: absolute;
@@ -454,6 +459,7 @@
       h1 { font-size: clamp(2.65rem, 13vw, 4rem); }
 
       .team-stage {
+        width: calc(100% - 20px)
         padding: 8px 42px 24px;
       }
 
