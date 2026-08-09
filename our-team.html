@@ -161,44 +161,78 @@
       font-size: clamp(1.05rem, 1.7vw, 1.22rem);
       line-height: 1.75;
     }
+
 .team-stage {
   position: relative;
   z-index: 2;
-  width: min(1200px, calc(100% - 60px));
+  width: min(1180px, calc(100% - 48px));
   margin: 0 auto;
   overflow: hidden;
-  padding: 10px 55px 25px;
+  padding: 10px 54px 24px;
 }
-   
-    .team-stage::before,
-    .team-stage::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: min(90px, 8vw);
-      z-index: 3;
-      pointer-events: none;
-    }
 
-    .team-stage::before {
-      left: 0;
-      background: linear-gradient(
-        90deg,
-        #F8FAFF 0%,
-        rgba(248, 250, 255, 0) 100%
-      );
-    }
+.team-stage::before,
+.team-stage::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: min(90px, 8vw);
+  z-index: 3;
+  pointer-events: none;
+}
 
-    .team-stage::after {
-      right: 0;
-      background: linear-gradient(
-        270deg,
-        #F8FAFF 0%,
-        rgba(248, 250, 255, 0) 100%
-      );
-    }
-.team-track {
+.team-stage::before {
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    #F8FAFF 0%,
+    rgba(248, 250, 255, 0) 100%
+  );
+}
+
+.team-stage::after {
+  right: 0;
+  background: linear-gradient(
+    270deg,
+    #F8FAFF 0%,
+    rgba(248, 250, 255, 0) 100%
+  );
+}
+
+.team-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 6;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--dark);
+  font-size: 1.35rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(26, 26, 46, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-arrow:hover {
+  background: var(--blue);
+  color: white;
+}
+
+.team-arrow-left {
+  left: 8px;
+}
+
+.team-arrow-right {
+  right: 8px;
+}
+ .team-track {
   display: flex;
   flex-direction: row;
   align-items: stretch;
@@ -209,69 +243,37 @@
   scrollbar-width: none;
 }
 
-    .team-track::-webkit-scrollbar {
-      display: none;
-    }
+.team-track::-webkit-scrollbar {
+  display: none;
+}
 
-    .team-arrow {
-      position: absolute;
-      top: 46%;
-      transform: translateY(-50%);
-      z-index: 6;
-      width: 44px;
-      height: 44px;
-      border: none;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.96);
-      color: var(--dark);
-      font-size: 1.35rem;
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: 0 8px 22px rgba(26, 26, 46, 0.18);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
-    }
-
-    .team-arrow:hover {
-      background: var(--blue);
-      color: white;
-    }
-
-    .team-arrow:active {
-      transform: translateY(-50%) scale(0.96);
-    }
-
-    .team-arrow-left { left: 8px; }
-    .team-arrow-right { right: 8px; }
-
-  .team-card {
+.team-card {
   width: 720px;
+  min-width: 720px;
   flex: 0 0 720px;
   min-height: 350px;
-    max-height: 350px;
+  max-height: 350px;
+
   display: grid;
   grid-template-columns: 220px 1fr;
-    overflow: hidden;
 
-    .team-card:hover,
-    .team-card:focus-visible {
-      transform: translateY(-5px);
-      box-shadow: 0 24px 52px rgba(26, 26, 46, 0.15);
-      outline: none;
-    }
-     border: 1px solid rgba(228, 232, 242, 0.95);
+  border: 1px solid rgba(228, 232, 242, 0.95);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.96);
   box-shadow: 0 18px 42px rgba(26, 26, 46, 0.1);
 
   overflow: hidden;
   cursor: pointer;
-
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-} 
- .portrait {
+}
+
+.team-card:hover,
+.team-card:focus-visible {
+  transform: translateY(-5px);
+  box-shadow: 0 24px 52px rgba(26, 26, 46, 0.15);
+  outline: none;
+}
+  .portrait {
   width: 220px;
   min-width: 220px;
   height: 350px;
@@ -279,115 +281,121 @@
   background: linear-gradient(135deg, #EEF2FF 0%, #F7FBFF 100%);
   border-right: 4px solid var(--accent, var(--blue));
   border-bottom: none;
+  overflow: hidden;
+}
 
-   overflow:hidden;
- }
-  display: grid;
-  place-items: center;
-  overflow: hidden; 
-    }
-  .portrait img {
+.portrait img {
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
-  object-position: center top;
+  object-fit: contain;
+  object-position: center center;
+  background: #EEF2FF;
 }
-    .portrait-placeholder {
-      width: 154px;
-      height: 154px;
-      border: 4px solid rgba(255, 255, 255, 0.8);
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.92), var(--accent, var(--blue)));
-      color: white;
-      display: grid;
-      place-items: center;
-      font-size: 2.3rem;
-      font-weight: 900;
-      letter-spacing: 0.04em;
-      box-shadow: 0 18px 34px rgba(26, 26, 46, 0.16);
-      text-shadow: 0 2px 12px rgba(26, 26, 46, 0.2);
-    }
+
+.portrait-placeholder {
+  width: 154px;
+  height: 154px;
+  border: 4px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 25%,
+    rgba(255, 255, 255, 0.92),
+    var(--accent, var(--blue))
+  );
+  color: white;
+  display: grid;
+  place-items: center;
+  font-size: 2.3rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  box-shadow: 0 18px 34px rgba(26, 26, 46, 0.16);
+  text-shadow: 0 2px 12px rgba(26, 26, 46, 0.2);
+}  
 .team-info {
   display: flex;
-   flex-direction: column;
-  height: 350px
+  flex-direction: column;
+  height: 350px;
   padding: 24px 28px;
   min-width: 0;
-    }
-    .team-info h2 {
-      color: var(--dark);
-      font-size: 1.18rem;
-      font-weight: 800;
-      line-height: 1.22;
-      margin-bottom: 6px;
-    }
-    .role {
-      color: var(--accent, var(--blue));
-      font-size: 0.9rem;
-      font-weight: 800;
-      line-height: 1.35;
-      margin-bottom: 14px;
-    }
-    .bio {
-      color: var(--mid);
-      font-size: 0.92rem;
-      line-height: 1.55;
-    }
-    .bio p { margin-bottom: 12px; }
-    }
-    .bio p:last-child { margin-bottom: 0; 
-    }
-    .bio-extra {
-      display: none !important;
-    }
-      max-height: 0;
-      opacity: 0;
-      overflow: hidden;
-      transition: max-height 0.28s ease, opacity 0.22s ease;
-    }
-    .team-card.expanded .bio-extra {
-      max-height: 2600px;
-      opacity: 1;
-      margin-top: 12px;
-    }
-    .contact-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: auto;
-      padding-top: 18px;
-    }
-    .contact-row a,
-    .more-btn {
-      min-height: 38px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: white;
-      color: var(--dark);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-family: "Segoe UI", Arial, sans-serif;
-      font-size: 0.82rem;
-      font-weight: 800;
-      padding: 8px 14px;
-      text-decoration: none;
-      transition: background 0.18s, border-color 0.18s, color 0.18s;
-    }
-    .more-btn {
-      background: var(--accent, var(--blue));
-      border-color: var(--accent, var(--blue));
-      color: white;
-    }
+}
 
-    .contact-row a:hover,
-    .more-btn:hover {
-      border-color: var(--accent, var(--blue));
-      color: var(--accent, var(--blue));
-    }
-    .more-btn:hover { background: white; }
+.team-info h2 {
+  color: var(--dark);
+  font-size: 1.18rem;
+  font-weight: 800;
+  line-height: 1.22;
+  margin-bottom: 6px;
+}
+
+.role {
+  color: var(--accent, var(--blue));
+  font-size: 0.9rem;
+  font-weight: 800;
+  line-height: 1.35;
+  margin-bottom: 14px;
+}
+
+.bio {
+  color: var(--mid);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.bio p {
+  margin-bottom: 12px;
+}
+
+.bio p:last-child {
+  margin-bottom: 0;
+}
+
+.bio-extra {
+  display: none !important;
+}
+  
+ .contact-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+.contact-row a,
+.more-btn {
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: white;
+  color: var(--dark);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: 8px 14px;
+  text-decoration: none;
+  transition: background 0.18s, border-color 0.18s, color 0.18s;
+}
+
+.more-btn {
+  background: var(--accent, var(--blue));
+  border-color: var(--accent, var(--blue));
+  color: white;
+}
+
+.contact-row a:hover,
+.more-btn:hover {
+  border-color: var(--accent, var(--blue));
+  color: var(--accent, var(--blue));
+}
+
+.more-btn:hover {
+  background: white;
+}  
 
     .dot-accent {
       position: absolute;
@@ -395,8 +403,20 @@
       opacity: 0.16;
       pointer-events: none;
     }
-    .dot-accent.one { width: 88px; height: 88px; background: var(--orange); top: 118px; left: 5vw; }
-    .dot-accent.two { width: 120px; height: 120px; background: var(--green); right: 3vw; bottom: 10%; }
+    .dot-accent.one {
+      width: 88px; 
+      height: 88px; 
+      background: var(--orange); 
+      top: 118px; 
+      left: 5vw;
+    }
+    .dot-accent.two {
+      width: 120px;
+      height: 120px; 
+      background: var(--green); 
+      right: 3vw; 
+      bottom: 10%; 
+    }
 
     footer {
       background: var(--dark);
@@ -405,102 +425,154 @@
       text-align: center;
       font-size: 0.88rem;
     }
-    footer strong { color: white; }
-
+    
+    footer strong { color: white; 
+    }
    @media (max-width: 800px) {
 
+  nav {
+    padding: 0 20px;
+  }
+
+  .nav-cta {
+    display: none;
+  }
+
+  .menu-toggle {
+    display: grid;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 68px;
+    left: 0;
+    right: 0;
+    padding: 18px 24px 22px;
+    background: rgba(255, 255, 255, 0.98);
+    border-bottom: 1px solid #EEEEF3;
+    box-shadow: 0 14px 28px rgba(26, 26, 46, 0.1);
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 13px 0;
+    font-size: 1rem;
+  }
+
+  .services-menu summary {
+    padding: 13px 0;
+    font-size: 1rem;
+  }
+
+  .services-dropdown {
+    position: static;
+    width: 100%;
+    padding: 0 0 5px 18px;
+    border: 0;
+    border-left: 2px solid var(--line);
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .services-dropdown a {
+    padding: 9px 0;
+    font-size: 0.92rem;
+  }
+
+  main {
+    padding-top: 88px;
+  }
+
+  .team-hero {
+    width: min(100% - 40px, 1120px);
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-size: clamp(2.65rem, 13vw, 4rem);
+  }
+
+  .team-stage {
+    width: calc(100% - 20px);
+    padding: 8px 42px 24px;
+  }
+
+  .team-stage::before,
+  .team-stage::after {
+    display: none;
+  }
+
+  .team-track {
+    scroll-snap-type: x mandatory;
+  }
+
+  .team-card {
+    width: calc(100vw - 100px);
+    min-width: calc(100vw - 100px);
+    flex: 0 0 calc(100vw - 100px);
+    grid-template-columns: 1fr;
+    min-height: 0;
+    max-height: none;
+    scroll-snap-align: center;
+  }
 
   .portrait {
     width: 100%;
     min-width: 0;
     height: 280px;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: auto;
     border-right: none;
     border-bottom: 4px solid var(--accent, var(--blue));
   }
-     .team-info {
+
+  .portrait img {
+    object-fit: contain;
+    object-position: center center;
+  }
+
+  .team-info {
+    height: auto;
     padding: 20px;
   }
-}  
- .team-card {
-    width: calc(100vw - 100px);
-    flex: 0 0 calc(100vw - 100px);
-    grid-template-columns: 1fr;
-    min-height: 0;
+
+  .team-arrow {
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
   }
-      .nav-links {
-        display: none;
-        position: absolute;
-        top: 68px;
-        left: 0;
-        right: 0;
-        padding: 18px 24px 22px;
-        background: rgba(255, 255, 255, 0.98);
-        border-bottom: 1px solid #EEEEF3;
-        box-shadow: 0 14px 28px rgba(26, 26, 46, 0.1);
-        flex-direction: column;
-        gap: 0;
-      }
 
-      .nav-links.open { display: flex; }
-      .nav-links a { display: block; padding: 13px 0; font-size: 1rem; }
-      .services-menu summary { padding: 13px 0; font-size: 1rem; }
+  .team-arrow-left {
+    left: 2px;
+  }
 
-      .services-dropdown {
-        position: static;
-        width: 100%;
-        padding: 0 0 5px 18px;
-        border: 0;
-        border-left: 2px solid var(--line);
-        border-radius: 0;
-        box-shadow: none;
-        background: transparent;
-      }
+  .team-arrow-right {
+    right: 2px;
+  }
+}
 
-      .services-dropdown a { padding: 9px 0; font-size: 0.92rem; }
-      main { padding-top: 88px; }
-      .team-hero { width: min(100% - 40px, 1120px); margin-bottom: 20px; }
-      h1 { font-size: clamp(2.65rem, 13vw, 4rem); }
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 
-      .team-stage {
-        width: calc(100% - 20px)
-        padding: 8px 42px 24px;
-      }
+  #dotCanvas {
+    display: none;
+  }
 
-      .team-stage::before,
-      .team-stage::after {
-        display: none;
-      }
+  .team-track {
+    scroll-behavior: auto;
+  }
+} 
 
-      .team-track {
-        scroll-snap-type: x mandatory;
-      }
-
-      .team-card {
-        width: min(332px, calc(100vw - 90px));
-        flex-basis: min(332px, calc(100vw - 90px));
-        scroll-snap-align: center;
-        min-height: 590px;
-      }
-
-      .portrait { height: auto; aspect-ratio: 4 / 5; }
-
-      .team-arrow {
-        width: 38px;
-        height: 38px;
-        font-size: 1.1rem;
-      }
-
-      .team-arrow-left { left: 2px; }
-      .team-arrow-right { right: 2px; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      #dotCanvas { display: none; }
-      .team-track { scroll-behavior: auto; }
-    }
-  </style>
+    </style>
 </head>
 
 <body>
@@ -551,7 +623,9 @@
       <p class="eyebrow">Our Team</p>
       <h1>Trusted<br />Connectors</h1>
       <hr class="heading-line" />
-      <p class="team-intro">The Dot Connector brings together experienced strategists, operators, researchers, communicators, and client advocates with deep relationships across business, government, politics, media, and public affairs.</p>
+      <p class="team-intro">
+        The Dot Connector brings together experienced strategists, operators, researchers, communicators, and client advocates with deep relationships across business, government, politics, media, and public affairs.
+      </p>
     </header>
 
     <section class="team-stage" aria-label="The Dot Connector team">
@@ -562,7 +636,10 @@
       <div class="team-track">
 
         <article class="team-card" style="--accent: var(--blue);">
-          <div class="portrait"><img src="team/richard-buckman.jpeg" alt="Richard “Buck” Buckman" /></div>
+          <div class="portrait">
+            <img src="team/richard-buckman.jpeg" alt="Richard “Buck” Buckman" />
+          </div>
+          
           <div class="team-info">
             <h2>Richard “Buck” Buckman</h2>
             <p class="role">Founder &amp; CEO</p>
@@ -581,16 +658,16 @@
                 <p>Buck is also an accomplished author and storyteller. His debut novel, Hills Over Havana, has been optioned for development as a major streaming series. Away from the office, Buck enjoys spending time with his wife, Kim, and their three beloved dogs, Hank, Branch, and Willow.</p>
               </div>
             </div>
-            <div class="contact-row">
-              <a class="more-btn" href="team-profile.html?member=richard-buckman">More</a>
-              <a href="mailto:buck@dotconnector.net">Email</a>
-              <a href="tel:+16016068577">(601) 606-8577</a>
-            </div>
-          </div>
-          </div>
-        </article>
+                <div class="contact-row">
+          <a class="more-btn" href="team-profile.html?member=richard-buckman">More</a>
+          <a href="mailto:buck@dotconnector.net">Email</a>
+          <a href="tel:+16016068577">(601) 606-8577</a>
+        </div>
+      </div>
+    </article>
+         
 
-        <article class="team-card" style="--accent: var(--orange);">
+       <article class="team-card" style="--accent: var(--orange);">
           <div class="portrait"><img src="team/kim-buckman.JPG" alt="Kim Buckman" /></div>
           <div class="team-info">
             <h2>Kim Buckman</h2>
@@ -728,13 +805,14 @@
             <div class="bio">
               <p><strong>IN MEMORY OF DEWAYNE BUCKMAN</strong></p>
               <p>For more than 25 years, Dewayne Buckman built a successful and respected career in the media industry, where his creativity, strategic thinking, and deep understanding of storytelling set him apart. After establishing himself in media, he transitioned into IT sales, where he once again found success through his ability to connect people, solve problems, and deliver results.</p>
+               <div class="bio-extra">
               <p>In his later years, Dewayne retired from corporate life to pursue his passions for writing and design, becoming one of the original Dot Connectors alongside his brother, Buck Buckman. It was here that he was able to fully express the breadth of his talent and vision.</p>
               <p>Dewayne was a gifted writer and the author of the novel Black Heart, which was widely received as a major success and is now being considered by film producers for adaptation into a major motion picture.</p> 
               <p>He was also a highly skilled and intuitive graphic designer, known for his sharp eye, creative precision, and ability to bring ideas to life visually. His design work played a key role in several of Dot Connector’s political victories, and he was instrumental in developing the company’s visual identity, including building and designing this very Dot Connector website.</p>
               <p>Beyond his creative contributions, Dewayne was a wise strategist and a trusted voice within the Dot Connector family. His insight, calm judgment, and ability to see the bigger picture made him invaluable to every project he touched.</p>
               <p>Dewayne passed away unexpectedly on July 12, 2026, in a tragic accident. His loss has left a profound void in the lives of those who knew and loved him.</p>
               <p>He is deeply missed by his brother Buck, his mother, his two daughters, his four grandchildren, and countless family members, friends, and colleagues. His passing has also left an immeasurable absence within the Dot Connector family, where his presence, creativity, and spirit were foundational.</p>
-              <p>Dewayne Buckman will always be remembered for his talent, his wisdom, his loyalty, and his ability to connect ideas, and people, in ways that made everything around him stronger. He will be forever loved and never forgotten.</p>
+              <p>Dewayne Buckman will always be remembered for his talent, his wisdom, his loyalty, and his ability to connect ideas and people in ways that made everything around him stronger. He will be forever loved and never forgotten.</p>
             </div>
           </div>
         </article>
@@ -791,67 +869,99 @@
             </div>
           </div>
         </article>
+<article class="team-card" style="--accent: var(--purple);">
 
+  <div class="portrait">
+    <img src="team/Pastor-Dan-Carr.jpeg" alt="Pastor Dan Carr" />
+  </div>
 
-        <article class="team-card" style="--accent: var(--purple);">
-          <div class="portrait"><img src="team/Pastor-Dan-Carr.jpeg" alt="Pastor Dan Carr" /></div>
-          <div class="team-info">
-            <h2>Pastor Dan Carr</h2>
-            <p class="role">Director Christian Outreach</p>
-            <div class="bio">
-              <p>Pastor Dan Carr is a respected pastor, author, community leader, and advocate for faith, family, and civic responsibility whose life’s work has been dedicated to strengthening homes, empowering churches, and encouraging Christians to become active participants in their communities. Raised in a pastor’s home, Pastor Carr has spent his entire life immersed in ministry, developing a deep understanding of servant leadership, biblical teaching, and the importance of building strong families as the foundation of a thriving society.</p>
-              <p>For nearly two decades, Pastor Dan and his wife have built a Christ-centered marriage while raising their five children, Quitman, David, Dianna, Londyn, and Scarlett. Together, they exemplify their belief that strong marriages and healthy families are the cornerstone of strong churches, vibrant communities, and a prosperous nation.</p>
-              <p>As Pastor of Community Baptist Church, Pastor Carr is committed to preaching God’s Word with conviction while equipping believers to live lives of purpose, integrity, and service. His ministry extends beyond the walls of the church, focusing on practical discipleship, community outreach, leadership development, and inspiring individuals to discover and fulfill their God-given calling.</p>
-              <p>Believing that faith and civic engagement are inseparable responsibilities, Pastor Carr has become a respected voice encouraging Christians to pray for, know, and engage with their elected leaders at every level of government. His commitment to responsible citizenship has led to active involvement in local political campaigns and public affairs. He currently serves as a member of the Harrison County Republican Club Board and the Harrison County Republican Executive Committee, where he works to promote informed civic participation, constitutional principles, and principled leadership.</p>
-              <p>An accomplished author, Pastor Carr has written two books—Chivalry Isn’t Dead and I Have Surrendered to Preach… Now What?, which reflect his passion for biblical manhood, Christian leadership, and encouraging both ministers and laypeople to faithfully pursue God’s calling in their lives.</p>
-              <p>Whether behind the pulpit, mentoring future leaders, participating in community initiatives, or helping shape civic dialogue, Pastor Carr approaches every opportunity with the conviction that every individual has unique gifts designed to make a lasting difference. His message consistently challenges people to live intentionally, serve faithfully, and invest in the next generation.</p>
-              <p>Outside of ministry and public service, Pastor Carr enjoys spending quality time with his wife, taking her on dates, investing in the lives of their children, and cheering on virtually every sport imaginable. His life reflects his belief that leadership begins at home and that authentic influence is built through consistent character, faithful service, and genuine relationships.</p>
-              <p>Through his ministry, writing, leadership, and civic involvement, Pastor Dan Carr continues to inspire others to strengthen their homes, serve their communities, engage their government with wisdom and grace, and live each day with purpose. His unwavering commitment to faith, family, and freedom has made him a trusted leader whose influence reaches far beyond the church, impacting communities and encouraging others to become the difference they wish to see in the world.</p>
-              <p>As a member of The Dot Connector team, Pastor Dan Carr brings a unique combination of pastoral leadership, community influence, and grassroots political engagement. His ability to unite people around shared values, cultivate meaningful relationships, and inspire servant leadership makes him a valuable resource for organizations, political campaigns, faith-based initiatives, and community development efforts. His experience in both ministry and civic affairs exemplifies The Dot Connector’s mission of connecting exceptional people, strategic opportunities, and purpose-driven solutions that create lasting impact.</p>
-            </div>
-            <div class="contact-row">
-              <a href="mailto:dan@dotconnector.net">Email</a>
-              <a href="tel:+12282293438">(228) 229-3438</a>
-            </div>
-          </div>
-        </article>
+  <div class="team-info">
 
-        <article class="team-card" style="--accent: var(--red);">
-          <div class="portrait"><img src="team/Robert-Simmons.jpg" alt="Robert Simmons" /></div>
-          <div class="team-info">
-            <h2>Robert Simmons</h2>
-            <p class="role">Director of Outreach</p>
-            <div class="bio">
-              <p>Robert Simmons is one the most respected government relations professionals, economic development strategists, and public policy advisors, bringing more than four decades of leadership experience at the intersection of government, business, community development, and public-private partnerships. Throughout his distinguished career, Simmons has successfully guided major commercial, industrial, residential, infrastructure, and governmental initiatives that have generated hundreds of millions of dollars in investment while helping shape the economic landscape of the Mississippi Gulf Coast and communities throughout the state.</p>
-              <p>Since 1993, Robert Simmons has provided strategic consulting services in government relations, legislative affairs, economic development, regulatory strategy, and public-private partnerships for clients at the local, state, and federal levels. His extensive portfolio has included private casino developments, hospitality projects, commercial shopping centers, local governments, the Gulfport-Biloxi International Airport, Mississippi Power Company, The GEO Group, Keefe Group, Sentinel, Harrison County, and numerous public and private organizations seeking experienced guidance in navigating government processes and advancing complex economic development initiatives.</p>
-              <p>Before entering private consulting, Simmons held several of the most influential economic development leadership positions in Mississippi. As Director of Community Development for the City of Biloxi, he played a pivotal role in planning initiatives that ultimately helped pave the way for the transformation of the Mississippi Gulf Coast through the development of the casino gaming industry. His leadership contributed to the creation of Biloxi’s Waterfront Master Plan, one of the most significant economic development initiatives in the region’s modern history.</p>
-              <p>Simmons later served as Director of Planning, Community Development, and Recreation for the City of Hattiesburg, where he managed four major municipal divisions, supervised a staff of more than sixty professionals, and directed a wide range of planning, transportation, recreation, housing, and economic development programs. Under his leadership, Hattiesburg’s Neighborhood Improvement Program earned national recognition by receiving the U.S. Conference of Mayors City Livability Award, while the city was also selected as a finalist for the prestigious All-America City Award presented by the National Civic League.</p>
-              <p>As Director of Economic Development for the City of Pass Christian, Simmons successfully recruited and coordinated one of the city’s first major commercial retail developments in many years, further demonstrating his ability to attract private investment and foster sustainable economic growth. Earlier in his career, while serving as Project Planner for the Southern Mississippi Planning and Development District, he prepared Community Development Block Grant applications, Urban Development Action Grant proposals, regional planning studies, and economic development strategies that benefited communities throughout South Mississippi.</p>
-              <p>Over the course of his career, Simmons has been directly involved in economic and community development initiatives responsible for generating well over $300 million in public and private investment. His expertise encompasses government affairs, legislative strategy, economic development, municipal planning, redevelopment, development finance, public policy, budgeting, organizational leadership, and the successful execution of large-scale public-private partnerships.</p>
-              <p>His educational background reflects an equally strong commitment to professional excellence. Simmons earned a Master of Urban and Regional Planning from the University of Mississippi after receiving his Bachelor of Arts in Political Science, with a minor in Economics, from Alcorn State University. He further strengthened his expertise through advanced certifications in Development Finance from the University of San Francisco and the New York University School of Real Estate, as well as certification as a Community Development Specialist.</p>
-              <p>Throughout his distinguished career, Simmons has been recognized as one of Mississippi’s leading voices in economic development and public service. His numerous honors include induction into the Alcorn State University Hall of Honor, the Distinguished Alumni Award from the National Association for Equal Opportunity in Higher Education, appointment to the Alcorn State University Foundation Board, and selection as one of Mississippi’s 50 Outstanding Leaders. Governor Ray Mabus appointed Simmons to the Mississippi Department of Economic Development Advisory Council, where he helped shape statewide economic development policy during a period of significant growth.</p>
-              <p>Beyond his professional accomplishments, Simmons has remained deeply committed to civic leadership and community service. He has served on numerous governmental, educational, charitable, and nonprofit boards, including the Seafood Industry Museum, the Greater Biloxi Economic Development Foundation, the Mississippi Rivers and Harbors Commission, the Jackson State University College of Public Service Council of Advisors, and as Chairman of the Trustee Board of Tabernacle Missionary Baptist Church in D’Iberville, Mississippi.</p>
-              <p>Today, Robert Simmons continues to be recognized as one of the Gulf South’s foremost authorities on government relations, legislative affairs, economic development, and strategic public-private partnerships. His unmatched understanding of government processes, combined with decades of trusted relationships across Mississippi and Washington, D.C., enables him to successfully connect public policy with private-sector investment, creating opportunities that strengthen communities, expand businesses, and drive long-term economic growth.</p>
-            </div>
-            <div class="contact-row">
-              <a href="mailto:robert@dotconnector.net">Email</a>
-              <a href="tel:+12286972692">(228) 697-2692</a>
-            </div>
-          </div>
-        </article>
+    <h2>Pastor Dan Carr</h2>
+    <p class="role">Director of Christian Outreach</p>
+
+    <div class="bio">
+
+      <p>Pastor Dan Carr is a respected pastor, author, community leader, and advocate for faith, family, and civic responsibility whose life’s work has been dedicated to strengthening homes, empowering churches, and encouraging Christians to become active participants in their communities. Raised in a pastor’s home, Pastor Carr has spent his entire life immersed in ministry, developing a deep understanding of servant leadership, biblical teaching, and the importance of building strong families as the foundation of a thriving society.</p>
+
+      <div class="bio-extra">
+
+        <p>For nearly two decades, Pastor Dan and his wife have built a Christ-centered marriage while raising their five children, Quitman, David, Dianna, Londyn, and Scarlett. Together, they exemplify their belief that strong marriages and healthy families are the cornerstone of strong churches, vibrant communities, and a prosperous nation.</p>
+        <p>As Pastor of Community Baptist Church, Pastor Carr is committed to preaching God’s Word with conviction while equipping believers to live lives of purpose, integrity, and service. His ministry extends beyond the walls of the church, focusing on practical discipleship, community outreach, leadership development, and inspiring individuals to discover and fulfill their God-given calling.</p>
+        <p>Believing that faith and civic engagement are inseparable responsibilities, Pastor Carr has become a respected voice encouraging Christians to pray for, know, and engage with their elected leaders at every level of government. His commitment to responsible citizenship has led to active involvement in local political campaigns and public affairs. He currently serves as a member of the Harrison County Republican Club Board and the Harrison County Republican Executive Committee, where he works to promote informed civic participation, constitutional principles, and principled leadership.</p>
+        <p>An accomplished author, Pastor Carr has written two books—Chivalry Isn’t Dead and I Have Surrendered to Preach… Now What?, which reflect his passion for biblical manhood, Christian leadership, and encouraging both ministers and laypeople to faithfully pursue God’s calling in their lives.</p>
+        <p>Whether behind the pulpit, mentoring future leaders, participating in community initiatives, or helping shape civic dialogue, Pastor Carr approaches every opportunity with the conviction that every individual has unique gifts designed to make a lasting difference. His message consistently challenges people to live intentionally, serve faithfully, and invest in the next generation.</p>
+        <p>Outside of ministry and public service, Pastor Carr enjoys spending quality time with his wife, taking her on dates, investing in the lives of their children, and cheering on virtually every sport imaginable. His life reflects his belief that leadership begins at home and that authentic influence is built through consistent character, faithful service, and genuine relationships.</p>
+        <p>Through his ministry, writing, leadership, and civic involvement, Pastor Dan Carr continues to inspire others to strengthen their homes, serve their communities, engage their government with wisdom and grace, and live each day with purpose. His unwavering commitment to faith, family, and freedom has made him a trusted leader whose influence reaches far beyond the church, impacting communities and encouraging others to become the difference they wish to see in the world.</p>
+        <p>As a member of The Dot Connector team, Pastor Dan Carr brings a unique combination of pastoral leadership, community influence, and grassroots political engagement. His ability to unite people around shared values, cultivate meaningful relationships, and inspire servant leadership makes him a valuable resource for organizations, political campaigns, faith-based initiatives, and community development efforts. His experience in both ministry and civic affairs exemplifies The Dot Connector’s mission of connecting exceptional people, strategic opportunities, and purpose-driven solutions that create lasting impact.</p>
+
+      </div>
+    </div>
+
+    <div class="contact-row">
+      <a class="more-btn" href="team-profile.html?member=dan-carr">More</a>
+      <a href="mailto:dan@dotconnector.net">Email</a>
+      <a href="tel:+12282293438">(228) 229-3438</a>
+    </div>
+
+  </div>
+
+</article>
+
+<article class="team-card" style="--accent: var(--red);">
+
+  <div class="portrait">
+    <img src="team/Robert-Simmons.jpg" alt="Robert Simmons" />
+  </div>
+
+  <div class="team-info">
+
+    <h2>Robert Simmons</h2>
+    <p class="role">Director of Outreach</p>
+
+    <div class="bio">
+
+      <p>Robert Simmons is one of the most respected government relations professionals, economic development strategists, and public policy advisors, bringing more than four decades of leadership experience at the intersection of government, business, community development, and public-private partnerships. Throughout his distinguished career, Simmons has successfully guided major commercial, industrial, residential, infrastructure, and governmental initiatives that have generated hundreds of millions of dollars in investment while helping shape the economic landscape of the Mississippi Gulf Coast and communities throughout the state.</p>
+
+      <div class="bio-extra">
+
+        <p>Since 1993, Robert Simmons has provided strategic consulting services in government relations, legislative affairs, economic development, regulatory strategy, and public-private partnerships for clients at the local, state, and federal levels. His extensive portfolio has included private casino developments, hospitality projects, commercial shopping centers, local governments, the Gulfport-Biloxi International Airport, Mississippi Power Company, The GEO Group, Keefe Group, Sentinel, Harrison County, and numerous public and private organizations seeking experienced guidance in navigating government processes and advancing complex economic development initiatives.</p>
+        <p>Before entering private consulting, Simmons held several of the most influential economic development leadership positions in Mississippi. As Director of Community Development for the City of Biloxi, he played a pivotal role in planning initiatives that ultimately helped pave the way for the transformation of the Mississippi Gulf Coast through the development of the casino gaming industry. His leadership contributed to the creation of Biloxi’s Waterfront Master Plan, one of the most significant economic development initiatives in the region’s modern history.</p>
+        <p>Simmons later served as Director of Planning, Community Development, and Recreation for the City of Hattiesburg, where he managed four major municipal divisions, supervised a staff of more than sixty professionals, and directed a wide range of planning, transportation, recreation, housing, and economic development programs. Under his leadership, Hattiesburg’s Neighborhood Improvement Program earned national recognition by receiving the U.S. Conference of Mayors City Livability Award, while the city was also selected as a finalist for the prestigious All-America City Award presented by the National Civic League.</p>
+        <p>As Director of Economic Development for the City of Pass Christian, Simmons successfully recruited and coordinated one of the city’s first major commercial retail developments in many years, further demonstrating his ability to attract private investment and foster sustainable economic growth. Earlier in his career, while serving as Project Planner for the Southern Mississippi Planning and Development District, he prepared Community Development Block Grant applications, Urban Development Action Grant proposals, regional planning studies, and economic development strategies that benefited communities throughout South Mississippi.</p>
+        <p>Over the course of his career, Simmons has been directly involved in economic and community development initiatives responsible for generating well over $300 million in public and private investment. His expertise encompasses government affairs, legislative strategy, economic development, municipal planning, redevelopment, development finance, public policy, budgeting, organizational leadership, and the successful execution of large-scale public-private partnerships.</p>
+        <p>His educational background reflects an equally strong commitment to professional excellence. Simmons earned a Master of Urban and Regional Planning from the University of Mississippi after receiving his Bachelor of Arts in Political Science, with a minor in Economics, from Alcorn State University. He further strengthened his expertise through advanced certifications in Development Finance from the University of San Francisco and the New York University School of Real Estate, as well as certification as a Community Development Specialist.</p>
+        <p>Throughout his distinguished career, Simmons has been recognized as one of Mississippi’s leading voices in economic development and public service. His numerous honors include induction into the Alcorn State University Hall of Honor, the Distinguished Alumni Award from the National Association for Equal Opportunity in Higher Education, appointment to the Alcorn State University Foundation Board, and selection as one of Mississippi’s 50 Outstanding Leaders. Governor Ray Mabus appointed Simmons to the Mississippi Department of Economic Development Advisory Council, where he helped shape statewide economic development policy during a period of significant growth.</p>
+        <p>Beyond his professional accomplishments, Simmons has remained deeply committed to civic leadership and community service. He has served on numerous governmental, educational, charitable, and nonprofit boards, including the Seafood Industry Museum, the Greater Biloxi Economic Development Foundation, the Mississippi Rivers and Harbors Commission, the Jackson State University College of Public Service Council of Advisors, and as Chairman of the Trustee Board of Tabernacle Missionary Baptist Church in D’Iberville, Mississippi.</p>
+        <p>Today, Robert Simmons continues to be recognized as one of the Gulf South’s foremost authorities on government relations, legislative affairs, economic development, and strategic public-private partnerships. His unmatched understanding of government processes, combined with decades of trusted relationships across Mississippi and Washington, D.C., enables him to successfully connect public policy with private-sector investment, creating opportunities that strengthen communities, expand businesses, and drive long-term economic growth.</p>
+
+      </div>
+    </div>
+
+    <div class="contact-row">
+      <a class="more-btn" href="team-profile.html?member=robert-simmons">More</a>
+      <a href="mailto:robert@dotconnector.net">Email</a>
+      <a href="tel:+12286972692">(228) 697-2692</a>
+    </div>
+
+  </div>
+
+</article>
 
       </div>
 
       <button class="team-arrow team-arrow-right" type="button" aria-label="Next team member">
         &#10095;
       </button>
+      
     </section>
   </main>
 
   <footer>
     <strong>The Dot Connector</strong> &nbsp;|&nbsp; Strategic relationships. Meaningful results.
   </footer>
-
+    }
+  
 <script>
   var menuToggle = document.querySelector(".menu-toggle");
   var mobileMenu = document.querySelector(".nav-links");
@@ -978,77 +1088,85 @@
     startAutoScroll();
   }
 
+(function() {
+  var canvas = document.getElementById("dotCanvas");
 
-  (function() {
-    var canvas = document.getElementById("dotCanvas");
-    if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    var ctx = canvas.getContext("2d");
-    var colors = ["#E63946", "#F4A261", "#2A9D8F", "#457B9D", "#8338EC", "#06A77D"];
-    var dots = [];
-    var width = 0;
-    var height = 0;
+  var ctx = canvas.getContext("2d");
+  var colors = ["#E63946", "#F4A261", "#2A9D8F", "#457B9D", "#8338EC", "#06A77D"];
+  var dots = [];
+  var width = 0;
+  var height = 0;
 
-    function resize() {
-      width = canvas.width = canvas.offsetWidth;
-      height = canvas.height = canvas.offsetHeight;
-      dots = [];
-      var count = Math.max(28, Math.floor((width * height) / 30000));
+  function resize() {
+    width = canvas.width = canvas.offsetWidth;
+    height = canvas.height = canvas.offsetHeight;
+    dots = [];
 
-      for (var i = 0; i < count; i++) {
-        dots.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          r: Math.random() * 14 + 5,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          alpha: Math.random() * 0.1 + 0.035,
-          vx: (Math.random() - 0.5) * 0.18,
-          vy: (Math.random() - 0.5) * 0.18
-        });
-      }
+    var count = Math.max(28, Math.floor((width * height) / 30000));
+
+    for (var i = 0; i < count; i++) {
+      dots.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 14 + 5,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        alpha: Math.random() * 0.1 + 0.035,
+        vx: (Math.random() - 0.5) * 0.18,
+        vy: (Math.random() - 0.5) * 0.18
+      });
     }
+  }
 
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
 
-      for (var i = 0; i < dots.length; i++) {
-        for (var j = i + 1; j < dots.length; j++) {
-          var distance = Math.hypot(dots[i].x - dots[j].x, dots[i].y - dots[j].y);
+    for (var i = 0; i < dots.length; i++) {
+      for (var j = i + 1; j < dots.length; j++) {
+        var distance = Math.hypot(
+          dots[i].x - dots[j].x,
+          dots[i].y - dots[j].y
+        );
 
-          if (distance < 180) {
-            ctx.beginPath();
-            ctx.moveTo(dots[i].x, dots[i].y);
-            ctx.lineTo(dots[j].x, dots[j].y);
-            ctx.strokeStyle = "rgba(82, 104, 180, " + (0.12 * (1 - distance / 180)) + ")";
-            ctx.stroke();
-          }
+        if (distance < 180) {
+          ctx.beginPath();
+          ctx.moveTo(dots[i].x, dots[i].y);
+          ctx.lineTo(dots[j].x, dots[j].y);
+          ctx.strokeStyle =
+            "rgba(82, 104, 180, " +
+            (0.12 * (1 - distance / 180)) +
+            ")";
+          ctx.stroke();
         }
       }
-
-      dots.forEach(function(dot) {
-        ctx.globalAlpha = dot.alpha;
-        ctx.beginPath();
-        ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
-        ctx.fillStyle = dot.color;
-        ctx.fill();
-        ctx.globalAlpha = 1;
-
-        dot.x += dot.vx;
-        dot.y += dot.vy;
-
-        if (dot.x < -dot.r) dot.x = width + dot.r;
-        if (dot.x > width + dot.r) dot.x = -dot.r;
-        if (dot.y < -dot.r) dot.y = height + dot.r;
-        if (dot.y > height + dot.r) dot.y = -dot.r;
-      });
-
-      requestAnimationFrame(animate);
     }
+dots.forEach(function(dot) {
+  ctx.globalAlpha = dot.alpha;
+  ctx.beginPath();
+  ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
+  ctx.fillStyle = dot.color;
+  ctx.fill();
+  ctx.globalAlpha = 1;
 
-    window.addEventListener("resize", resize);
-    resize();
-    animate();
-  }());
+  dot.x += dot.vx;
+  dot.y += dot.vy;
+
+  if (dot.x < -dot.r) dot.x = width + dot.r;
+  if (dot.x > width + dot.r) dot.x = -dot.r;
+  if (dot.y < -dot.r) dot.y = height + dot.r;
+  if (dot.y > height + dot.r) dot.y = -dot.r;
+});
+
+requestAnimationFrame(animate);
+}
+
+window.addEventListener("resize", resize);
+resize();
+animate();
+
+}());
+
 
 </script>
 </body>
