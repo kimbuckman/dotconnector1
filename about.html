@@ -333,139 +333,122 @@
         <p>As a trusted advisor, the Dot Connector pursues projects by aligning public policy, private capital, and strategic relationships, carefully guiding complex projects from concept through execution to fruition.</p>
       </article>
     </div>
-  </main>
+
+ 
 </main>
 
 <script>
-  var menuToggle = document.querySelector(".menu-toggle");
-  var mobileMenu = document.querySelector(".nav-links");
+    var menuToggle = document.querySelector(".menu-toggle");
+    var mobileMenu = document.querySelector(".nav-links");
 
-  if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener("click", function() {
-      var isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+    if (menuToggle && mobileMenu) {
+      menuToggle.addEventListener("click", function() {
+        var isOpen = menuToggle.getAttribute("aria-expanded") === "true";
 
-      menuToggle.setAttribute("aria-expanded", String(!isOpen));
-
-      menuToggle.setAttribute(
-        "aria-label",
-        isOpen ? "Open navigation" : "Close navigation"
-      );
-
-      mobileMenu.classList.toggle("open", !isOpen);
-    });
-  }
-
-  (function() {
-    var canvas = document.getElementById("dotCanvas");
-
-    if (
-      !canvas ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) return;
-
-    var ctx = canvas.getContext("2d");
-
-    var colors = [
-      "#E63946",
-      "#F4A261",
-      "#2A9D8F",
-      "#457B9D",
-      "#8338EC",
-      "#06A77D"
-    ];
-
-    var dots = [];
-    var width = 0;
-    var height = 0;
-
-    function resize() {
-      width = canvas.width = canvas.offsetWidth;
-      height = canvas.height = canvas.offsetHeight;
-
-      dots = [];
-
-      var count = Math.max(
-        24,
-        Math.floor((width * height) / 30000)
-      );
-
-      for (var i = 0; i < count; i++) {
-        dots.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          r: Math.random() * 14 + 5,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          alpha: Math.random() * 0.1 + 0.035,
-          vx: (Math.random() - 0.5) * 0.18,
-          vy: (Math.random() - 0.5) * 0.18
-        });
-      }
+        menuToggle.setAttribute("aria-expanded", String(!isOpen));
+        
+        menuToggle.setAttribute(
+"aria-label", 
+isOpen ? "Open navigation" : "Close navigation"
+);
+        mobileMenu.classList.toggle("open", !isOpen);
+      });
     }
 
-    function animate() {
-      ctx.clearRect(0, 0, width, height);
+    (function() {
+      var canvas = document.getElementById("dotCanvas");
+      
+      if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) return;
 
-      for (var i = 0; i < dots.length; i++) {
-        for (var j = i + 1; j < dots.length; j++) {
-          var distance = Math.hypot(
-            dots[i].x - dots[j].x,
-            dots[i].y - dots[j].y
-          );
+      var ctx = canvas.getContext("2d");
+      var colors = [
+        "#E63946", 
+        "#F4A261", 
+        "#2A9D8F", 
+        "#457B9D", 
+        "#8338EC",
+        "#06A77D"
+      ];
+      
+      var dots = [];
+      var width = 0;
+      var height = 0;
 
-          if (distance < 180) {
-            ctx.beginPath();
-            ctx.moveTo(dots[i].x, dots[i].y);
-            ctx.lineTo(dots[j].x, dots[j].y);
-
-            ctx.strokeStyle =
-              "rgba(82, 104, 180, " +
-              (0.12 * (1 - distance / 180)) +
-              ")";
-
-            ctx.stroke();
-          }
+      function resize() {
+        width = canvas.width = canvas.offsetWidth;
+        height = canvas.height = canvas.offsetHeight;
+        dots = [];
+        
+        var count = Math.max(
+          24, 
+          Math.floor((width * height) / 30000)
+        );
+        
+        for (var i = 0; i < count; i++) {
+          dots.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            r: Math.random() * 14 + 5,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            alpha: Math.random() * 0.1 + 0.035,
+            vx: (Math.random() - 0.5) * 0.18,
+            vy: (Math.random() - 0.5) * 0.18
+          });
         }
       }
 
-      dots.forEach(function(dot) {
-        ctx.globalAlpha = dot.alpha;
+      function animate() {
+        ctx.clearRect(0, 0, width, height);
+        
+        for (var i = 0; i < dots.length; i++) {
+          for (var j = i + 1; j < dots.length; j++) {
+            var distance = Math.hypot
+              (dots[i].x - dots[j].x, 
+               dots[i].y - dots[j].y
+              );
+            
+            if (distance < 180) {
+              ctx.beginPath();
+              ctx.moveTo(dots[i].x, dots[i].y);
+              ctx.lineTo(dots[j].x, dots[j].y);
+              
+              ctx.strokeStyle = 
+                "rgba(82, 104, 180, " +
+                (0.12 * (1 - distance / 180)) + 
+                ")";
+                
+              ctx.stroke();
+            }
+          }
+        }
 
-        ctx.beginPath();
-        ctx.arc(
-          dot.x,
-          dot.y,
-          dot.r,
-          0,
-          Math.PI * 2
-        );
+        dots.forEach(function(dot) {
+          ctx.globalAlpha = dot.alpha;
+          ctx.beginPath();
+          ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
+          ctx.fillStyle = dot.color;
+          ctx.fill();
+          ctx.globalAlpha = 1;
+          
+          dot.x += dot.vx;
+          dot.y += dot.vy;
+          
+          if (dot.x < -dot.r) dot.x = width + dot.r;
+          if (dot.x > width + dot.r) dot.x = -dot.r;
+          if (dot.y < -dot.r) dot.y = height + dot.r;
+          if (dot.y > height + dot.r) dot.y = -dot.r;
+        });
 
-        ctx.fillStyle = dot.color;
-        ctx.fill();
+        requestAnimationFrame(animate);
+      }
 
-        ctx.globalAlpha = 1;
-
-        dot.x += dot.vx;
-        dot.y += dot.vy;
-
-        if (dot.x < -dot.r) dot.x = width + dot.r;
-        if (dot.x > width + dot.r) dot.x = -dot.r;
-        if (dot.y < -dot.r) dot.y = height + dot.r;
-        if (dot.y > height + dot.r) dot.y = -dot.r;
-      });
-
-      requestAnimationFrame(animate);
-    }
-
-    window.addEventListener("resize", resize);
-
-    resize();
-    animate();
-  }());
-  
- </main>
-   
-</script>
-
+      window.addEventListener("resize", resize);
+      
+      resize();
+      animate();
+    }());
+    </script>
 <footer>
   <div class="footer-content">
 
@@ -494,87 +477,4 @@
 
 </body>
 </html>
-    var menuToggle = document.querySelector(".menu-toggle");
-    var mobileMenu = document.querySelector(".nav-links");
 
-    if (menuToggle && mobileMenu) {
-      menuToggle.addEventListener("click", function() {
-        var isOpen = menuToggle.getAttribute("aria-expanded") === "true";
-
-        menuToggle.setAttribute("aria-expanded", String(!isOpen));
-        menuToggle.setAttribute(
-"aria-label", 
-isOpen ? "Open navigation" : "Close navigation"
-);
-        mobileMenu.classList.toggle("open", !isOpen);
-      });
-    }
-
-    (function() {
-      var canvas = document.getElementById("dotCanvas");
-      if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-      var ctx = canvas.getContext("2d");
-      var colors = ["#E63946", "#F4A261", "#2A9D8F", "#457B9D", "#8338EC", "#06A77D"];
-      var dots = [];
-      var width = 0;
-      var height = 0;
-
-      function resize() {
-        width = canvas.width = canvas.offsetWidth;
-        height = canvas.height = canvas.offsetHeight;
-        dots = [];
-        var count = Math.max(24, Math.floor((width * height) / 30000));
-        for (var i = 0; i < count; i++) {
-          dots.push({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            r: Math.random() * 14 + 5,
-            color: colors[Math.floor(Math.random() * colors.length)],
-            alpha: Math.random() * 0.1 + 0.035,
-            vx: (Math.random() - 0.5) * 0.18,
-            vy: (Math.random() - 0.5) * 0.18
-          });
-        }
-      }
-
-      function animate() {
-        ctx.clearRect(0, 0, width, height);
-        for (var i = 0; i < dots.length; i++) {
-          for (var j = i + 1; j < dots.length; j++) {
-            var distance = Math.hypot(dots[i].x - dots[j].x, dots[i].y - dots[j].y);
-            if (distance < 180) {
-              ctx.beginPath();
-              ctx.moveTo(dots[i].x, dots[i].y);
-              ctx.lineTo(dots[j].x, dots[j].y);
-              ctx.strokeStyle = "rgba(82, 104, 180, " + (0.12 * (1 - distance / 180)) + ")";
-              ctx.stroke();
-            }
-          }
-        }
-
-        dots.forEach(function(dot) {
-          ctx.globalAlpha = dot.alpha;
-          ctx.beginPath();
-          ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
-          ctx.fillStyle = dot.color;
-          ctx.fill();
-          ctx.globalAlpha = 1;
-          dot.x += dot.vx;
-          dot.y += dot.vy;
-          if (dot.x < -dot.r) dot.x = width + dot.r;
-          if (dot.x > width + dot.r) dot.x = -dot.r;
-          if (dot.y < -dot.r) dot.y = height + dot.r;
-          if (dot.y > height + dot.r) dot.y = -dot.r;
-        });
-
-        requestAnimationFrame(animate);
-      }
-
-      window.addEventListener("resize", resize);
-      resize();
-      animate();
-    }());
-  </script>
-</body>
-</html>
