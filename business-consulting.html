@@ -351,105 +351,153 @@
         <p>We connect good people—business-minded people—to move ideas and innovation toward success.</p>
       </article>
     </div>
+ 
+  </footer>
   </main>
 
-  <footer>
-    <p></p>
-    <strong>The Dot Connector</strong> &nbsp;|&nbsp; Strategic relationships. Meaningful results. 2026. All Rights reserved.
+<script>
+  var menuToggle = document.querySelector(".menu-toggle");
+  var mobileMenu = document.querySelector(".nav-links");
+
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener("click", function() {
+      var isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+
+      menuToggle.setAttribute("aria-expanded", String(!isOpen));
+
+      menuToggle.setAttribute(
+        "aria-label",
+        isOpen ? "Open navigation" : "Close navigation"
+      );
+
+      mobileMenu.classList.toggle("open", !isOpen);
+    });
+  }
+
+  (function() {
+    var canvas = document.getElementById("dotCanvas");
+
+    if (
+      !canvas ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) return;
+
+    var ctx = canvas.getContext("2d");
+    var colors = [
+      "#E63946",
+      "#F4A261",
+      "#2A9D8F",
+      "#457B9D",
+      "#8338EC",
+      "#06A77D"
+    ];
+
+    var dots = [];
+    var width = 0;
+    var height = 0;
+
+    function resize() {
+      width = canvas.width = canvas.offsetWidth;
+      height = canvas.height = canvas.offsetHeight;
+      dots = [];
+
+      var count = Math.max(
+        24,
+        Math.floor((width * height) / 30000)
+      );
+
+      for (var i = 0; i < count; i++) {
+        dots.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          r: Math.random() * 14 + 5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: Math.random() * 0.1 + 0.035,
+          vx: (Math.random() - 0.5) * 0.18,
+          vy: (Math.random() - 0.5) * 0.18
+        });
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+
+      for (var i = 0; i < dots.length; i++) {
+        for (var j = i + 1; j < dots.length; j++) {
+          var distance = Math.hypot(
+            dots[i].x - dots[j].x,
+            dots[i].y - dots[j].y
+          );
+
+          if (distance < 180) {
+            ctx.beginPath();
+            ctx.moveTo(dots[i].x, dots[i].y);
+            ctx.lineTo(dots[j].x, dots[j].y);
+
+            ctx.strokeStyle =
+              "rgba(82, 104, 180, " +
+              (0.12 * (1 - distance / 180)) +
+              ")";
+
+            ctx.stroke();
+          }
+        }
+      }
+
+      dots.forEach(function(dot) {
+        ctx.globalAlpha = dot.alpha;
+        ctx.beginPath();
+        ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
+        ctx.fillStyle = dot.color;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+
+        dot.x += dot.vx;
+        dot.y += dot.vy;
+
+        if (dot.x < -dot.r) dot.x = width + dot.r;
+        if (dot.x > width + dot.r) dot.x = -dot.r;
+        if (dot.y < -dot.r) dot.y = height + dot.r;
+        if (dot.y > height + dot.r) dot.y = -dot.r;
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener("resize", resize);
+
+    resize();
+    animate();
+  }());
+</script>
+
+<footer>
+  <div class="footer-content">
+
+    <p>
+      <strong>The Dot Connector</strong> &copy; 2026. All rights reserved.
     </p>
-        <p>
+
+    <p>
       601 Pennsylvania Avenue, NW, South Building, Suite 900<br>
       Washington, DC 20004
     </p>
 
     <p>
-      Office: <a href="tel:+12024348934">(202) 434-8934</a>
+      Office:
+      <a href="tel:+12024348934">(202) 434-8934</a>
       &nbsp;|&nbsp;
-      Cell: <a href="tel:+16016068577">(601) 606-8577</a>
+      Cell:
+      <a href="tel:+16016068577">(601) 606-8577</a>
       &nbsp;|&nbsp;
-      Email: <a href="mailto:buck@dotconnector.net">buck@dotconnector.net</a>
-      </p>
+      Email:
+      <a href="mailto:buck@dotconnector.net">buck@dotconnector.net</a>
+    </p>
 
   </div>
-  </footer>
-
-  <script>
-    var menuToggle = document.querySelector(".menu-toggle");
-    var mobileMenu = document.querySelector(".nav-links");
-    if (menuToggle && mobileMenu) {
-      menuToggle.addEventListener("click", function() {
-        var isOpen = menuToggle.getAttribute("aria-expanded") === "true";
-        menuToggle.setAttribute("aria-expanded", String(!isOpen));
-        menuToggle.setAttribute("aria-label", isOpen ? "Open navigation" : "Close navigation");
-        mobileMenu.classList.toggle("open", !isOpen);
-      });
-    }
-
-    (function() {
-      var canvas = document.getElementById("dotCanvas");
-      if (!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-      var ctx = canvas.getContext("2d");
-      var colors = ["#E63946", "#F4A261", "#2A9D8F", "#457B9D", "#8338EC", "#06A77D"];
-      var dots = [];
-      var width = 0;
-      var height = 0;
-
-      function resize() {
-        width = canvas.width = canvas.offsetWidth;
-        height = canvas.height = canvas.offsetHeight;
-        dots = [];
-        var count = Math.max(24, Math.floor((width * height) / 30000));
-        for (var i = 0; i < count; i++) {
-          dots.push({
-            x: Math.random() * width,
-            y: Math.random() * height,
-            r: Math.random() * 14 + 5,
-            color: colors[Math.floor(Math.random() * colors.length)],
-            alpha: Math.random() * 0.1 + 0.035,
-            vx: (Math.random() - 0.5) * 0.18,
-            vy: (Math.random() - 0.5) * 0.18
-          });
-        }
-      }
-
-      function animate() {
-        ctx.clearRect(0, 0, width, height);
-        for (var i = 0; i < dots.length; i++) {
-          for (var j = i + 1; j < dots.length; j++) {
-            var distance = Math.hypot(dots[i].x - dots[j].x, dots[i].y - dots[j].y);
-            if (distance < 180) {
-              ctx.beginPath();
-              ctx.moveTo(dots[i].x, dots[i].y);
-              ctx.lineTo(dots[j].x, dots[j].y);
-              ctx.strokeStyle = "rgba(82, 104, 180, " + (0.12 * (1 - distance / 180)) + ")";
-              ctx.stroke();
-            }
-          }
-        }
-
-        dots.forEach(function(dot) {
-          ctx.globalAlpha = dot.alpha;
-          ctx.beginPath();
-          ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
-          ctx.fillStyle = dot.color;
-          ctx.fill();
-          ctx.globalAlpha = 1;
-          dot.x += dot.vx;
-          dot.y += dot.vy;
-          if (dot.x < -dot.r) dot.x = width + dot.r;
-          if (dot.x > width + dot.r) dot.x = -dot.r;
-          if (dot.y < -dot.r) dot.y = height + dot.r;
-          if (dot.y > height + dot.r) dot.y = -dot.r;
-        });
-
-        requestAnimationFrame(animate);
-      }
-
-      window.addEventListener("resize", resize);
-      resize();
-      animate();
-    }());
-  </script>
+</footer>
+  
 </body>
 </html>
+
+  
