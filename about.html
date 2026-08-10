@@ -198,18 +198,18 @@
       pointer-events: none;
     }
     .dot-accent.one { width: 88px; height: 88px; background: var(--orange); top: 118px; left: 5vw; }
-    .dot-accent.two { width: 120px; height: 120px; background: var(--green); right: 3vw; bottom: 12%; }
+    .dot-accent.two { width: 120px; height: 120px; background: var(--green); right: 3vw; bottom: 12%;
+}
 
-    footer {
-      background: var(--dark);
-      color: rgba(255, 255, 255, 0.58);
-      padding: 28px 40px;
-      text-align: center;
-      font-size: 0.88rem;
-    }
-    footer strong { color: white; 
-    }
-    .footer-content {
+ footer {
+  background: var(--dark);
+  color: white;
+  padding: 28px 40px;
+  text-align: center;
+  font-size: 0.88rem;
+}
+
+.footer-content {
   max-width: 1100px;
   margin: 0 auto;
 }
@@ -220,16 +220,14 @@
   color: white;
 }
 
-.footer-content a {
-  color: white;
+.footer-content a,
+.footer-content a:visited {
+  color: white !important;
   text-decoration: none;
 }
-.footer-content a:visited {
-  color: white;
-}  
 
 .footer-content a:hover {
-  color: white;
+  color: white !important;
   text-decoration: underline;
 }
    
