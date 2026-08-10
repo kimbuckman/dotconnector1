@@ -152,24 +152,19 @@ font-size:17px;
 cursor:pointer;
 
 }
-
 button:hover{
-
 background:#19487c;
-
 }
+  
 footer {
   background: var(--dark);
-  color: rgba(255, 255, 255, 0.58);
+  color: white;
   padding: 28px 40px;
   text-align: center;
   font-size: 0.88rem;
 }
 
-footer strong {
-  color: white;
-}
- .footer-content {
+.footer-content {
   max-width: 1100px;
   margin: 0 auto;
 }
@@ -177,16 +172,19 @@ footer strong {
 .footer-content p {
   margin: 6px 0;
   line-height: 1.6;
+  color: white;
 }
 
-.footer-content a {
-  color: white;
+.footer-content a,
+.footer-content a:visited {
+  color: white !important;
   text-decoration: none;
 }
 
 .footer-content a:hover {
+  color: white !important;
   text-decoration: underline;
-} 
+}
 @media(max-width:900px){
 
 .container{
@@ -321,6 +319,31 @@ Send Message
 </div>
 
 </div>
+ <footer>
+  <div class="footer-content">
+
+    <p>
+      <strong>The Dot Connector</strong> &copy; 2026. All rights reserved.
+    </p>
+
+    <p>
+      601 Pennsylvania Avenue, NW, South Building, Suite 900<br>
+      Washington, DC 20004
+    </p>
+
+    <p>
+      Office:
+      <a href="tel:+12024348934">(202) 434-8934</a>
+      &nbsp;|&nbsp;
+      Cell:
+      <a href="tel:+16016068577">(601) 606-8577</a>
+      &nbsp;|&nbsp;
+      Email:
+      <a href="mailto:buck@dotconnector.net">buck@dotconnector.net</a>
+    </p>
+
+  </div>
+</footer> 
 
 </body>
 
