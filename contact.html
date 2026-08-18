@@ -185,6 +185,16 @@ footer {
   color: white !important;
   text-decoration: underline;
 }
+ .hidden-field {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}   
 @media(max-width:900px){
 
 .container{
@@ -262,10 +272,23 @@ Complete the form and a member of our team will respond as quickly as possible.
 <div class="contact-box">
 
 <h2>Send Us a Message</h2>
-
-<form name="contact" method="POST" netlify action="/thank-you.html">
+    
+<form
+  name="contact"
+  method="POST"
+  netlify
+  netlify-honeypot="bot-field"
+  action="/thank-you.html">
 
 <input type="hidden" name="form-name" value="contact">
+
+<p class="hidden-field">
+  <label>
+    Don't fill this out if you're human:
+    <input name="bot-field" type="text">
+  </label>
+</p>
+
 
 <label>Name</label>
 
